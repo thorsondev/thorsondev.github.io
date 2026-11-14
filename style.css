@@ -571,3 +571,5 @@ details p { margin-top: 8px; color: var(--muted); }
   .hero-gallery .eyebrow, .hero-gallery h1 { grid-column: 1; justify-self: center; }
   .strip[data-for="duo"] .frame img { height: min(27vw, 41vh, 400px); }
 }
+
+@media (max-width: 720px) { .strip-nav { display: none; } }
