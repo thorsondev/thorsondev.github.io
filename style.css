@@ -263,7 +263,7 @@ details p { margin-top: 8px; color: var(--muted); }
 .sky {
   background:
     radial-gradient(70% 40% at 50% 92%, rgba(255, 255, 255, 0.35), transparent 70%),
-    linear-gradient(180deg, #0c0f2c 0%, #1b1f4a 34%, #3e3f72 54%, #8f8bb4 70%, var(--mist) 86%, var(--bg) 100%);
+    linear-gradient(180deg, #0c0f2c 0%, #1b1f4a 40%, #34366a 64%, #7f7ba8 80%, var(--mist) 92%, var(--bg) 100%);
 }
 @media (prefers-color-scheme: dark) {
   .sky { background: linear-gradient(180deg, #0a0c24 0%, #151839 40%, #22254f 70%, var(--mist) 88%, var(--bg) 100%); }
@@ -306,3 +306,7 @@ details p { margin-top: 8px; color: var(--muted); }
 }
 .hero h1 { font-size: clamp(2.8rem, 5.6vw, 4.2rem); }
 .eyebrow { letter-spacing: 0.16em; }
+
+/* The folded Duo leans on the open one's right side, clear of the Today card. */
+.phone.folded { left: auto; right: -4%; bottom: -12%; transform: rotate(6deg); }
+@media (max-width: 960px) { .phone.folded { left: auto; right: -1%; } .duo-stage { padding-left: 0; padding-right: 6%; } }
