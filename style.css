@@ -631,3 +631,17 @@ details p { margin-top: 8px; color: var(--muted); }
 .strip { align-items: flex-start; }
 .strip figure { align-content: start; }
 .strip .frame { align-self: start; }
+
+/* ---------- One showcase: the Duo unfolds, then becomes the carousel ---------- */
+.strip figure.unfold { width: min-content; margin: 0; gap: 16px; }
+.strip .frame.unfold-stage {
+  padding: 0; background: none; box-shadow: none; border-radius: 0;
+  height: min(30vw, 46vh, 440px); min-height: 240px; width: auto; aspect-ratio: 3093 / 2247;
+}
+.strip.folded figure:not(.unfold), .strip.folded figure.unfold figcaption { opacity: 0; pointer-events: none; }
+.strip figure { transition: opacity .6s ease; }
+.strip figure.unfold figcaption { transition: opacity .6s ease .2s; }
+@media (max-width: 720px) {
+  .strip[data-for="duo"] figure.unfold { width: calc(100vw - 56px); }
+  .strip .frame.unfold-stage { width: 100%; height: auto; min-height: 0; }
+}

@@ -46,27 +46,6 @@
       setTimeout(() => (b.textContent = "Copy"), 1800);
     });
   });
-  // The Duo opening: plays once when it comes into view; "Open again" replays it.
-  const unfold = document.querySelector(".unfold");
-  if (unfold) {
-    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const open = () => unfold.classList.add("is-open");
-    if (still) open();
-    else {
-      const seen = new IntersectionObserver((entries) => {
-        if (entries.some((e) => e.isIntersecting)) { seen.disconnect(); setTimeout(open, 500); }
-      }, { threshold: 0.5 });
-      seen.observe(unfold);
-    }
-    unfold.querySelector(".replay")?.addEventListener("click", () => {
-      unfold.classList.add("no-anim");
-      unfold.classList.remove("is-open");
-      void unfold.offsetWidth;
-      unfold.classList.remove("no-anim");
-      setTimeout(open, 450);
-    });
-  }
-
   // The gallery: the switch shows that device's row of screens.
   const gallery = document.querySelector(".gallery");
   if (gallery) {
@@ -97,6 +76,32 @@
       s.style.paddingInline = `${pad}px`;
       s.style.scrollPaddingInline = `${pad}px`;
     };
+    // The Duo opens like a book, then the rest of its screens fade in.
+    const duoStrip = gallery.querySelector('.strip[data-for="duo"]');
+    const unfold = duoStrip?.querySelector(".unfold");
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let unfoldTimer;
+    const playUnfold = (delay = 450) => {
+      if (!unfold || still) return;
+      clearTimeout(unfoldTimer);
+      duoStrip.classList.add("folded");
+      unfold.classList.add("no-anim");
+      unfold.classList.remove("is-open");
+      void unfold.offsetWidth;
+      unfold.classList.remove("no-anim");
+      unfoldTimer = setTimeout(() => {
+        unfold.classList.add("is-open");
+        unfoldTimer = setTimeout(() => duoStrip.classList.remove("folded"), 1350);
+      }, delay);
+    };
+    if (unfold && !still) {
+      duoStrip.classList.add("folded");
+      const seen = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { seen.disconnect(); if (gallery.dataset.device === "duo") playUnfold(600); }
+      }, { threshold: 0.45 });
+      seen.observe(unfold);
+    } else unfold?.classList.add("is-open");
+
     const pick = (name, focus) => {
       gallery.dataset.device = name;
       devices.forEach((b) => { const on = b.dataset.device === name; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); });
@@ -106,7 +111,7 @@
       updateNav();
     };
     devices.forEach((b, i) => {
-      b.addEventListener("click", () => pick(b.dataset.device));
+      b.addEventListener("click", () => { const was = gallery.dataset.device; pick(b.dataset.device); if (b.dataset.device === "duo" && was !== "duo") playUnfold(); });
       b.addEventListener("keydown", (e) => {
         const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
         if (!d) return;
