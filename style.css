@@ -387,3 +387,22 @@ details p { margin-top: 8px; color: var(--muted); }
   .device-switch button { padding: 9px 10px; font-size: 13px; gap: 5px; }
   .device-switch svg { width: 18px; height: 16px; }
 }
+
+/* Stacked hero (Duo, small iPad, phone): a compact title block so the
+   devices sit high on the first screen. */
+@media (max-width: 960px) {
+  .hero-duo { padding-block: 6px 110px; gap: 26px; }
+  .hero-duo .hero-copy { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 16px; align-items: center; justify-items: start; }
+  .hero-duo .hero-copy .icon { grid-row: 1 / span 2; width: 66px; height: 66px; border-radius: 15px; margin: 0; }
+  .hero-duo .eyebrow { align-self: end; margin: 0 0 2px; font-size: 11px; }
+  .hero-duo h1 { align-self: start; font-size: clamp(2.3rem, 7vw, 3rem); }
+  .hero-duo .lede, .hero-duo .cta { grid-column: 1 / -1; }
+  .hero-duo .lede { margin: 14px 0 18px; max-width: 46ch; font-size: 1.1rem; }
+  .hero-duo .today-card { display: none; }
+  .moon { top: 84px; width: 54px; height: 54px; box-shadow: 13px -8px 0 0 #f6ecd2; }
+}
+@media (max-width: 520px) {
+  .hero-duo .hero-copy .icon { width: 56px; height: 56px; border-radius: 13px; }
+  .hero-duo .lede { font-size: 1.02rem; }
+  .pill { padding: 11px 16px; font-size: 14px; }
+}
