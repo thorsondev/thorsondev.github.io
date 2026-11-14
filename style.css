@@ -431,3 +431,9 @@ details p { margin-top: 8px; color: var(--muted); }
 .device-caption { margin-top: -6px; }
 @media (max-width: 520px) { .screen-tabs button { padding: 7px 9px; font-size: 13px; } }
 @media (prefers-reduced-motion: reduce) { .device .screen img.shot { transition: none; } }
+
+/* The gallery's tabs and caption stay on night sky, where they read clearly. */
+@media (min-width: 961px) {
+  .sky { background: radial-gradient(70% 40% at 50% 96%, rgba(255, 255, 255, 0.3), transparent 70%),
+    linear-gradient(180deg, #0c0f2c 0%, #1b1f4a 42%, #34366a 70%, #6e6a9a 86%, var(--mist) 95%, var(--bg) 100%); }
+}
