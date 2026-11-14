@@ -89,5 +89,7 @@
     strips.forEach((s) => s.addEventListener("scroll", updateNav, { passive: true }));
     addEventListener("resize", updateNav);
     updateNav();
+    // Once the page is up, fetch the other devices' screens so switching is instant.
+    addEventListener("load", () => gallery.querySelectorAll("img[loading=lazy]").forEach((i) => { i.loading = "eager"; }));
   }
 })();
