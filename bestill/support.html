@@ -3,68 +3,89 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
 <title>Support · Be Still</title>
-<meta name="description" content="Help with Be Still: contact the developer and answers to common questions.">
-<link rel="icon" href="icon.png">
+<meta name="description" content="Help with Be Still: write to the developer, and answers to common questions.">
+<meta name="theme-color" content="#0c0f26">
+<link rel="icon" href="img/icon-256.png">
+<link rel="apple-touch-icon" href="img/icon-256.png">
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-<main>
-  <nav aria-label="Be Still">
-    <a href="./">Be Still</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="support.html" aria-current="page">Support</a>
-  </nav>
 
-  <header>
-    <p class="eyebrow">Be Still</p>
-    <h1>Support</h1>
-    <p class="lede">Questions, ideas or something not working? I read every message.</p>
-  </header>
+<header class="sky">
+  <canvas class="stars" aria-hidden="true"></canvas>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="wrap narrow">
+    <div class="topbar">
+      <a class="brand" href="./"><img src="img/icon-256.png" alt=""><span>Be Still</span></a>
+      <nav class="nav" aria-label="Be Still">
+        <a href="./">Home</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="support.html" aria-current="page">Support</a>
+      </nav>
+    </div>
+    <div class="page-hero">
+      <p class="eyebrow">Be Still</p>
+      <h1>Support</h1>
+      <p>Questions, ideas, or something not working? I read every message.</p>
+    </div>
+  </div>
+  <svg class="dunes" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="far" d="M0 96 C 180 60 340 70 520 92 S 900 128 1100 96 S 1340 66 1440 82 V160 H0 Z"/>
+    <path class="near" d="M0 128 C 220 104 420 112 640 126 S 1040 150 1240 128 S 1400 112 1440 118 V160 H0 Z"/>
+  </svg>
+</header>
 
-  <section class="contact">
-    <h2>Email</h2>
-    <p class="email">thorson.developer@gmail.com</p>
-    <p>It helps to include your device (for example, iPhone 17 or iPad mini) and the version of iOS.</p>
-  </section>
-
-  <section>
-    <h2>Common questions</h2>
-    <div>
-      <details>
+<main class="wrap narrow">
+  <article class="doc glass">
+    <section>
+      <h2>Write to me</h2>
+      <p>It helps to include your device (for example, iPhone 17 or iPad mini) and its version of iOS.</p>
+      <div class="email-card"><span class="email" id="email">thorson.developer@gmail.com</span><button class="copy" type="button" data-copy="thorson.developer@gmail.com" data-select="#email">Copy</button></div>
+    </section>
+    <section>
+      <h2>Common questions</h2>
+      <div>
+        <details>
         <summary>Why don't I see Today's Reflection or Bible Chat?</summary>
         <p>Today's Reflection is written by Apple Intelligence, so it needs an iPhone or iPad that supports it, with Apple Intelligence turned on in Settings › Apple Intelligence &amp; Siri. Bible Chat can also use its own model, downloaded once, on devices without Apple Intelligence.</p>
       </details>
-      <details>
+        <details>
         <summary>How do I sync my notes and prayers between devices?</summary>
         <p>Sign in to iCloud on each device and make sure iCloud is allowed for Be Still in Settings. Your notes, highlights, prayers and plans sync through your own private iCloud account.</p>
       </details>
-      <details>
+        <details>
         <summary>Can I read without an internet connection?</summary>
         <p>Yes. Download a translation in Settings › Offline Library, and it's there whenever you need it, along with full-text search.</p>
       </details>
-      <details>
+        <details>
         <summary>How do I turn reminders on or off?</summary>
         <p>Go to Settings › Reminders in the app. You can choose a time for the verse of the day, an evening streak reminder and a morning reading plan reminder, each on its own. You can also tap the bell on the streak card or on a reading plan.</p>
       </details>
-      <details>
+        <details>
         <summary>Which translations are available?</summary>
         <p>The Berean Standard Bible and other free translations are always available, and the ESV can be chosen in Settings. The NIV is coming soon.</p>
       </details>
-      <details>
+        <details>
         <summary>I forgot my Journal lock. How do I get in?</summary>
         <p>The lock uses Face ID or your device passcode, so anyone who can unlock your iPhone can unlock the Journal. Nothing is stored with Be Still that could be reset.</p>
       </details>
-      <details>
+        <details>
         <summary>Does Be Still cost anything?</summary>
         <p>No. Everything is free, with no ads and nothing locked. Tips are optional and unlock nothing.</p>
       </details>
-    </div>
-  </section>
-
-  <footer>
-    <a href="./">Be Still</a> · <a href="privacy.html">Privacy Policy</a>
-  </footer>
+      </div>
+    </section>
+  </article>
 </main>
+
+<footer class="site">
+  <div class="wrap narrow">
+    <span>Be Still · Free, with no ads, made by one person.</span>
+    <span><a href="./">Home</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a></span>
+  </div>
+</footer>
+<script src="../site.js"></script>
 </body>
 </html>

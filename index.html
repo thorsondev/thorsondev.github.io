@@ -3,32 +3,44 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
 <title>Thorson Apps</title>
-<meta name="description" content="Apps by Thorson.">
-<link rel="icon" href="bestill/icon.png">
+<meta name="description" content="Small, careful apps for iPhone and iPad, made by one person.">
+<meta name="theme-color" content="#0c0f26">
+<link rel="icon" href="bestill/img/icon-256.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <header>
-    <p class="eyebrow">Apps</p>
-    <h1>Thorson Apps</h1>
-    <p class="lede">Small, careful apps, made by one person.</p>
-  </header>
-
-  <section>
-    <a class="feature" href="bestill/" style="display:flex;gap:16px;align-items:center;text-decoration:none;color:inherit">
-      <img src="bestill/icon.png" alt="" width="64" height="64" style="border-radius:15px">
-      <span>
-        <h2 style="margin:0">Be Still</h2>
-        <span style="color:var(--muted)">A Bible for quiet time with God.</span>
-      </span>
-    </a>
-  </section>
-
-  <footer>
-    Contact: <span style="user-select:all">thorson.developer@gmail.com</span>
-  </footer>
+<header class="sky">
+  <canvas class="stars" aria-hidden="true"></canvas>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="wrap narrow">
+    <div class="page-hero" style="padding-top:72px">
+      <p class="eyebrow">Apps</p>
+      <h1>Thorson Apps</h1>
+      <p>Small, careful apps for iPhone and iPad, made by one person.</p>
+    </div>
+  </div>
+  <svg class="dunes" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="far" d="M0 96 C 180 60 340 70 520 92 S 900 128 1100 96 S 1340 66 1440 82 V160 H0 Z"/>
+    <path class="near" d="M0 128 C 220 104 420 112 640 126 S 1040 150 1240 128 S 1400 112 1440 118 V160 H0 Z"/>
+  </svg>
+</header>
+<main class="wrap narrow">
+  <a class="feature glass" href="bestill/" style="margin-top:-70px;position:relative;text-decoration:none;color:inherit;align-items:center">
+    <img src="bestill/img/icon-256.png" alt="" width="72" height="72" style="border-radius:17px">
+    <span>
+      <h3 style="font-family:var(--serif);font-size:1.4rem;margin:0">Be Still</h3>
+      <p>A Bible for quiet time with God. Free, private, with no ads.</p>
+    </span>
+  </a>
 </main>
+<footer class="site" style="margin-top:72px">
+  <div class="wrap narrow">
+    <span>Thorson Apps</span>
+    <span><a href="bestill/">Be Still</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
 </body>
 </html>
