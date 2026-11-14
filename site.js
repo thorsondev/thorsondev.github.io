@@ -93,5 +93,7 @@
     addEventListener("resize", fit);
     new ResizeObserver(fit).observe(stage);
     fit();
+    // Animate shape changes only after the first size is set.
+    requestAnimationFrame(() => requestAnimationFrame(() => show.classList.add("ready")));
   }
 })();

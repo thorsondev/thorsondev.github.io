@@ -406,3 +406,8 @@ details p { margin-top: 8px; color: var(--muted); }
   .hero-duo .lede { font-size: 1.02rem; }
   .pill { padding: 11px 16px; font-size: 14px; }
 }
+
+/* No shape-change animation until the frame has its first size. */
+.showcase:not(.ready) .device, .showcase:not(.ready) .device .screen { transition: none; }
+@media (max-width: 960px) { .device-stage { aspect-ratio: 1.25; } }
+@media (max-width: 520px) { .device-stage { aspect-ratio: 1; } }
