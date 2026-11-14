@@ -46,6 +46,27 @@
       setTimeout(() => (b.textContent = "Copy"), 1800);
     });
   });
+  // The Duo opening: plays once when it comes into view; "Open again" replays it.
+  const unfold = document.querySelector(".unfold");
+  if (unfold) {
+    const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const open = () => unfold.classList.add("is-open");
+    if (still) open();
+    else {
+      const seen = new IntersectionObserver((entries) => {
+        if (entries.some((e) => e.isIntersecting)) { seen.disconnect(); setTimeout(open, 500); }
+      }, { threshold: 0.5 });
+      seen.observe(unfold);
+    }
+    unfold.querySelector(".replay")?.addEventListener("click", () => {
+      unfold.classList.add("no-anim");
+      unfold.classList.remove("is-open");
+      void unfold.offsetWidth;
+      unfold.classList.remove("no-anim");
+      setTimeout(open, 450);
+    });
+  }
+
   // The gallery: the switch shows that device's row of screens.
   const gallery = document.querySelector(".gallery");
   if (gallery) {
