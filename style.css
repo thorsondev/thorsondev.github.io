@@ -506,3 +506,8 @@ details p { margin-top: 8px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .strip { scroll-behavior: auto; } .strip:not([hidden]) { animation: none; } }
 /* The night lasts behind the gallery; the mist comes below it. */
 .sky { background: linear-gradient(180deg, #0c0f2c 0%, #1b1f4a 30%, #2c2f60 70%, #5e5a8c 86%, var(--mist) 95%, var(--bg) 100%) !important; }
+
+/* Each caption wraps to its frame, so the frame hugs the screen. */
+.strip figure { width: min-content; }
+.strip .frame { width: max-content; }
+@media (max-width: 720px) { .strip[data-for="duo"] figure { width: calc(100vw - 56px); } .strip[data-for="duo"] .frame { width: auto; } }
