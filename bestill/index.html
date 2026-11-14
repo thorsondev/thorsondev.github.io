@@ -12,7 +12,7 @@
 <meta property="og:image" content="https://thorsondev.github.io/bestill/img/duo-reflection.jpg">
 <link rel="icon" href="img/icon-256.png">
 <link rel="apple-touch-icon" href="img/icon-256.png">
-<link rel="stylesheet" href="../style.css?v=15">
+<link rel="stylesheet" href="../style.css?v=16">
 </head>
 <body>
 
@@ -29,58 +29,108 @@
       </nav>
     </div>
 
-    <div class="hero hero-duo">
+    <div class="hero hero-gallery">
       <div class="hero-copy">
         <img class="icon" src="img/icon-256.png" alt="Be Still app icon" width="92" height="92">
         <p class="eyebrow">For iPhone Duo, iPhone and iPad</p>
         <h1>Be Still</h1>
         <p class="lede">A Bible for quiet time with God. Read, listen, reflect and pray, in a space that stays yours.</p>
-        <div class="today-card">
-          <canvas class="stars" aria-hidden="true"></canvas>
-          <span class="tc-label">TODAY</span>
-          <p class="tc-verse">“Be still and know that I am God; I will be exalted among the nations, I will be exalted over the earth.”</p>
-          <div class="tc-foot"><span class="tc-ref">Psalm 46:10</span><span class="glass-btn">Read</span></div>
-        </div>
         <div class="cta">
           <span class="pill"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.9-.9-3.1-.8C6.8 7.4 5.3 8.3 4.5 9.8c-1.7 2.9-.4 7.2 1.2 9.6.8 1.2 1.7 2.4 2.9 2.4 1.2 0 1.6-.8 3-.8s1.8.8 3.1.7c1.3 0 2.1-1.2 2.8-2.3.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.4-.9-2.4-3.6zM14.1 5.8c.6-.8 1.1-1.8 1-2.8-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.7-1 2.7 1 .1 2-.5 2.7-1.3z"/></svg>Coming soon to the App Store</span>
           <span class="quiet-facts">Free · No ads · No account</span>
         </div>
       </div>
-      <div class="showcase" data-device="duo">
-        <div class="device-stage">
-          <div class="device">
-            <div class="screen">
-              <img class="shot" src="img/duo-reflection.jpg" alt="Be Still on the iPhone Duo: the Library on one page and today's reflection on the other." width="1800" height="1266">
-            </div>
-            <span class="hinge" aria-hidden="true"></span>
-            <span class="island" aria-hidden="true"></span>
-          </div>
-        </div>
-        <div class="device-switch" role="radiogroup" aria-label="See Be Still on">
-          <span class="thumb" aria-hidden="true"></span>
-          <button type="button" role="radio" aria-checked="true" data-device="duo" tabindex="0">
-            <svg viewBox="0 0 28 20" aria-hidden="true"><rect x="2" y="3" width="11.5" height="14" rx="2.5"/><rect x="14.5" y="3" width="11.5" height="14" rx="2.5"/></svg>
-            <span>iPhone Duo</span>
-          </button>
-          <button type="button" role="radio" aria-checked="false" data-device="iphone" tabindex="-1">
-            <svg viewBox="0 0 28 20" aria-hidden="true"><rect x="9.5" y="1.5" width="9" height="17" rx="2.6"/></svg>
-            <span>iPhone</span>
-          </button>
-          <button type="button" role="radio" aria-checked="false" data-device="ipad" tabindex="-1">
-            <svg viewBox="0 0 28 20" aria-hidden="true"><rect x="7" y="1.5" width="14" height="17" rx="2"/></svg>
-            <span>iPad</span>
-          </button>
-        </div>
-        <div class="screen-tabs" role="tablist" aria-label="Screens">
-          <button type="button" role="tab" data-screen="library" aria-selected="false" tabindex="-1">Library</button>
-          <button type="button" role="tab" data-screen="reflection" aria-selected="true" tabindex="0">Reflection</button>
-          <button type="button" role="tab" data-screen="reader" aria-selected="false" tabindex="-1">Read</button>
-          <button type="button" role="tab" data-screen="quiet" aria-selected="false" tabindex="-1">Be Still</button>
-          <button type="button" role="tab" data-screen="chat" aria-selected="false" tabindex="-1">Bible Chat</button>
-        </div>
-        <p class="device-caption" aria-live="polite">Today's verse on one page, its reflection and prayer on the other.</p>
+    </div>
+  </div>
+
+  <div class="gallery" data-device="duo">
+    <div class="wrap gallery-head">
+      <div class="device-switch" role="radiogroup" aria-label="See Be Still on">
+        <span class="thumb" aria-hidden="true"></span>
+        <button type="button" role="radio" aria-checked="true" data-device="duo" tabindex="0">
+          <svg viewBox="0 0 28 20" aria-hidden="true"><rect x="2" y="3" width="11.5" height="14" rx="2.5"/><rect x="14.5" y="3" width="11.5" height="14" rx="2.5"/></svg>
+          <span>iPhone Duo</span>
+        </button>
+        <button type="button" role="radio" aria-checked="false" data-device="iphone" tabindex="-1">
+          <svg viewBox="0 0 28 20" aria-hidden="true"><rect x="9.5" y="1.5" width="9" height="17" rx="2.6"/></svg>
+          <span>iPhone</span>
+        </button>
+        <button type="button" role="radio" aria-checked="false" data-device="ipad" tabindex="-1">
+          <svg viewBox="0 0 28 20" aria-hidden="true"><rect x="7" y="1.5" width="14" height="17" rx="2"/></svg>
+          <span>iPad</span>
+        </button>
+      </div>
+      <div class="strip-nav">
+        <button type="button" class="round" data-step="-1" aria-label="Previous screens"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button type="button" class="round" data-step="1" aria-label="More screens"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
       </div>
     </div>
+        <div class="strip" data-for="duo" role="tabpanel" aria-label="iPhone Duo screens">
+          <figure>
+            <div class="frame"><img src="img/duo-library.jpg" alt="Library on iPhone Duo." width="1800" height="1266" loading="lazy"><span class="hinge" aria-hidden="true"></span></div>
+            <figcaption><b>Library</b>The Library on one page, Reading Plans on the other.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/duo-reflection.jpg" alt="Today's Reflection on iPhone Duo." width="1800" height="1266" loading="lazy"><span class="hinge" aria-hidden="true"></span></div>
+            <figcaption><b>Today's Reflection</b>Today's verse on one page, its reflection and prayer on the other.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/duo-reader.jpg" alt="Read on iPhone Duo." width="1800" height="1266" loading="lazy"><span class="hinge" aria-hidden="true"></span></div>
+            <figcaption><b>Read</b>Two pages, set like a printed Bible.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/duo-quiet.jpg" alt="Be Still on iPhone Duo." width="1800" height="1266" loading="lazy"><span class="hinge" aria-hidden="true"></span></div>
+            <figcaption><b>Be Still</b>Today's verse beside five quiet minutes of prayer.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/duo-chat.jpg" alt="Bible Chat on iPhone Duo." width="1800" height="1266" loading="lazy"><span class="hinge" aria-hidden="true"></span></div>
+            <figcaption><b>Bible Chat</b>Answers on one page, the verses beside them.</figcaption>
+          </figure>
+        </div>
+        <div class="strip" data-for="iphone" role="tabpanel" aria-label="iPhone screens" hidden>
+          <figure>
+            <div class="frame"><img src="img/iphone-library.jpg" alt="Library on iPhone." width="1300" height="2825" loading="lazy"><span class="island" aria-hidden="true"></span></div>
+            <figcaption><b>Library</b>Today's verse, your streak and the day's reflection.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/iphone-reflection.jpg" alt="Today's Reflection on iPhone." width="1300" height="2825" loading="lazy"><span class="island" aria-hidden="true"></span></div>
+            <figcaption><b>Today's Reflection</b>A short reflection and prayer on today's verse.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/iphone-reader.jpg" alt="Read on iPhone." width="1300" height="2825" loading="lazy"><span class="island" aria-hidden="true"></span></div>
+            <figcaption><b>Read</b>Scripture set like a printed Bible.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/iphone-quiet.jpg" alt="Be Still on iPhone." width="1300" height="2825" loading="lazy"><span class="island" aria-hidden="true"></span></div>
+            <figcaption><b>Be Still</b>Breathe, read the verse slowly and pray.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/iphone-chat.jpg" alt="Bible Chat on iPhone." width="1300" height="2825" loading="lazy"><span class="island" aria-hidden="true"></span></div>
+            <figcaption><b>Bible Chat</b>Questions answered from Scripture, on your device.</figcaption>
+          </figure>
+        </div>
+        <div class="strip" data-for="ipad" role="tabpanel" aria-label="iPad screens" hidden>
+          <figure>
+            <div class="frame"><img src="img/ipad-library.jpg" alt="Library on iPad." width="1500" height="2000" loading="lazy"></div>
+            <figcaption><b>Library</b>The Library beside Reading Plans.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/ipad-reflection.jpg" alt="Today's Reflection on iPad." width="1500" height="2000" loading="lazy"></div>
+            <figcaption><b>Today's Reflection</b>A short reflection and prayer on today's verse.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/ipad-reader.jpg" alt="Read on iPad." width="1500" height="2000" loading="lazy"></div>
+            <figcaption><b>Read</b>Scripture set like a printed Bible.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/ipad-quiet.jpg" alt="Be Still on iPad." width="1500" height="2000" loading="lazy"></div>
+            <figcaption><b>Be Still</b>Breathe, read the verse slowly and pray.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame"><img src="img/ipad-chat.jpg" alt="Bible Chat on iPad." width="1500" height="2000" loading="lazy"></div>
+            <figcaption><b>Bible Chat</b>Questions answered from Scripture, on your device.</figcaption>
+          </figure>
+        </div>
   </div>
   <svg class="dunes" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
     <path class="far" d="M0 96 C 180 60 340 70 520 92 S 900 128 1100 96 S 1340 66 1440 82 V160 H0 Z"/>
@@ -154,6 +204,6 @@
     <span><a href="privacy.html">Privacy</a><a href="support.html">Support</a></span>
   </div>
 </footer>
-<script src="../site.js?v=15"></script>
+<script src="../site.js?v=16"></script>
 </body>
 </html>

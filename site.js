@@ -46,102 +46,39 @@
       setTimeout(() => (b.textContent = "Copy"), 1800);
     });
   });
-  // The gallery: the switch picks the device (the frame takes its true shape),
-  // the tabs pick the screen, and both stay put as the other changes.
-  const show = document.querySelector(".showcase");
-  if (show) {
-    const stage = show.querySelector(".device-stage");
-    const device = show.querySelector(".device");
-    const shot = show.querySelector("img.shot");
-    const devices = [...show.querySelectorAll(".device-switch button")];
-    const tabs = [...show.querySelectorAll(".screen-tabs button")];
-    const caption = show.querySelector(".device-caption");
-    // Screen proportions (width / height) of each device's screenshots.
-    const shapes = { duo: 2853 / 2007, iphone: 1320 / 2868, ipad: 2064 / 2752 };
-    const names = { duo: "the iPhone Duo", iphone: "iPhone", ipad: "iPad" };
-    const captions = {
-      library: { duo: "The Library on one page, Reading Plans on the other.", iphone: "Today's verse, your streak and the day's reflection.", ipad: "The Library beside Reading Plans." },
-      reflection: { duo: "Today's verse on one page, its reflection and prayer on the other.", other: "A short reflection and prayer on today's verse, written on your device." },
-      reader: { duo: "Two pages, set like a printed Bible.", other: "Scripture set like a printed Bible, with verse-by-verse listening." },
-      quiet: { duo: "Today's verse beside five quiet minutes of prayer.", other: "Breathe, read the verse slowly and pray. About five minutes." },
-      chat: { duo: "Bible Chat answers on one page, with the verses beside it.", other: "Questions answered from Scripture, privately, on your device." },
+  // The gallery: the switch shows that device's row of screens.
+  const gallery = document.querySelector(".gallery");
+  if (gallery) {
+    const devices = [...gallery.querySelectorAll(".device-switch button")];
+    const strips = [...gallery.querySelectorAll(".strip")];
+    const [prev, next] = gallery.querySelectorAll(".strip-nav .round");
+    const current = () => strips.find((s) => !s.hidden);
+    const updateNav = () => {
+      const s = current(); if (!s || !prev) return;
+      prev.disabled = s.scrollLeft < 8;
+      next.disabled = s.scrollLeft + s.clientWidth > s.scrollWidth - 8;
     };
-    const alts = { library: "the Library", reflection: "Today's Reflection", reader: "the reader", quiet: "a quiet time", chat: "Bible Chat" };
-    let state = { device: show.dataset.device || "duo", screen: "reflection" };
-    let token = 0;
-
-    const fit = () => {
-      const pad = parseFloat(getComputedStyle(device).getPropertyValue("--pad")) || 12;
-      const box = stage.getBoundingClientRect();
-      const a = shapes[state.device];
-      let w = box.width - 2 * pad, h = w / a;
-      if (h > box.height - 2 * pad) { h = box.height - 2 * pad; w = h * a; }
-      device.style.width = `${w + 2 * pad}px`;
-      device.style.height = `${h + 2 * pad}px`;
+    const pick = (name, focus) => {
+      gallery.dataset.device = name;
+      devices.forEach((b) => { const on = b.dataset.device === name; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); });
+      strips.forEach((s) => { s.hidden = s.dataset.for !== name; if (!s.hidden) s.scrollLeft = 0; });
+      updateNav();
     };
-    const update = (focusEl) => {
-      show.dataset.device = state.device;
-      devices.forEach((b) => { const on = b.dataset.device === state.device; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; });
-      tabs.forEach((b) => { const on = b.dataset.screen === state.screen; b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1; });
-      const c = captions[state.screen];
-      caption.textContent = c[state.device] || c.other;
-      fit();
-      // Fade to the new screenshot once it has loaded, so nothing flashes empty.
-      const src = `img/${state.device}-${state.screen}.jpg`;
-      const mine = ++token;
-      shot.classList.add("swap");
-      const next = new Image();
-      next.onload = next.onerror = () => {
-        if (mine !== token) return;
-        setTimeout(() => {
-          shot.src = src;
-          shot.alt = `Be Still on ${names[state.device]}: ${alts[state.screen]}.`;
-          shot.classList.remove("swap");
-        }, 120);
-      };
-      next.src = src;
-      focusEl?.focus();
-    };
-    const order = tabs.map((b) => b.dataset.screen);
-    const step = (n, focus) => {
-      state.screen = order[(order.indexOf(state.screen) + n + order.length) % order.length];
-      update(focus ? tabs[order.indexOf(state.screen)] : null);
-    };
-
     devices.forEach((b, i) => {
-      b.addEventListener("click", () => { state.device = b.dataset.device; update(); });
+      b.addEventListener("click", () => pick(b.dataset.device));
       b.addEventListener("keydown", (e) => {
         const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
         if (!d) return;
         e.preventDefault();
-        const next = devices[(i + d + devices.length) % devices.length];
-        state.device = next.dataset.device; update(next);
+        pick(devices[(i + d + devices.length) % devices.length].dataset.device, true);
       });
     });
-    tabs.forEach((b) => {
-      b.addEventListener("click", () => { state.screen = b.dataset.screen; update(); });
-      b.addEventListener("keydown", (e) => {
-        const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-        if (d) { e.preventDefault(); step(d, true); }
-      });
-    });
-    // Swipe the frame for the next or previous screen.
-    let startX = null;
-    device.addEventListener("pointerdown", (e) => { startX = e.clientX; });
-    device.addEventListener("pointerup", (e) => {
-      if (startX === null) return;
-      const dx = e.clientX - startX; startX = null;
-      if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
-    });
-    device.addEventListener("pointercancel", () => { startX = null; });
-
-    addEventListener("resize", fit);
-    new ResizeObserver(fit).observe(stage);
-    update();
-    requestAnimationFrame(() => requestAnimationFrame(() => show.classList.add("ready")));
-    // Warm the cache for the screens a visitor is likely to tap next.
-    addEventListener("load", () => {
-      for (const d of Object.keys(shapes)) for (const s of order) { const i = new Image(); i.src = `img/${d}-${s}.jpg`; }
-    });
+    [prev, next].forEach((b) => b?.addEventListener("click", () => {
+      const s = current(), fig = s.querySelector("figure");
+      s.scrollBy({ left: Number(b.dataset.step) * (fig.getBoundingClientRect().width + 28), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }));
+    strips.forEach((s) => s.addEventListener("scroll", updateNav, { passive: true }));
+    addEventListener("resize", updateNav);
+    updateNav();
   }
 })();
