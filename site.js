@@ -60,17 +60,28 @@
       const figs = [...s.querySelectorAll("figure")];
       const left = s.getBoundingClientRect().left;
       let at = 0, best = Infinity;
-      figs.forEach((f, i) => { const d = Math.abs(f.getBoundingClientRect().left - left - parseFloat(getComputedStyle(s).paddingLeft)); if (d < best) { best = d; at = i; } });
+      const mid = left + s.clientWidth / 2;
+      figs.forEach((f, i) => { const r = f.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < best) { best = d; at = i; } });
       if (s.scrollLeft + s.clientWidth > s.scrollWidth - 8) at = figs.length - 1;
       dots.forEach((d, i) => d.classList.toggle("on", i === at));
       if (!prev) return;
       prev.disabled = s.scrollLeft < 8;
       next.disabled = s.scrollLeft + s.clientWidth > s.scrollWidth - 8;
     };
+    // Pad each row so its first and last screens can sit in the middle.
+    const center = () => {
+      const s = current(); if (!s) return;
+      const fig = s.querySelector("figure");
+      const pad = Math.max(16, (s.clientWidth - fig.getBoundingClientRect().width) / 2);
+      s.style.paddingInline = `${pad}px`;
+      s.style.scrollPaddingInline = `${pad}px`;
+    };
     const pick = (name, focus) => {
       gallery.dataset.device = name;
       devices.forEach((b) => { const on = b.dataset.device === name; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; if (on && focus) b.focus(); });
-      strips.forEach((s) => { s.hidden = s.dataset.for !== name; if (!s.hidden) s.scrollLeft = 0; });
+      strips.forEach((s) => { s.hidden = s.dataset.for !== name; });
+      center();
+      const s = current(); s.style.scrollBehavior = "auto"; s.scrollLeft = 0; s.style.scrollBehavior = "";
       updateNav();
     };
     devices.forEach((b, i) => {
@@ -87,7 +98,10 @@
       s.scrollBy({ left: Number(b.dataset.step) * (fig.getBoundingClientRect().width + 28), behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     }));
     strips.forEach((s) => s.addEventListener("scroll", updateNav, { passive: true }));
-    addEventListener("resize", updateNav);
+    addEventListener("resize", () => { center(); updateNav(); });
+    // Images set the frames' widths: center once they're in.
+    strips.forEach((s) => s.querySelectorAll("img").forEach((i) => i.addEventListener("load", () => { if (!s.hidden) { center(); updateNav(); } })));
+    center();
     updateNav();
     // Once the page is up, fetch the other devices' screens so switching is instant.
     addEventListener("load", () => gallery.querySelectorAll("img[loading=lazy]").forEach((i) => { i.loading = "eager"; }));

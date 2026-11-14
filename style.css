@@ -516,3 +516,37 @@ details p { margin-top: 8px; color: var(--muted); }
 .strip-dots { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
 .strip-dots span { width: 7px; height: 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.3); transition: width .3s, background .3s; }
 .strip-dots span.on { width: 22px; background: var(--gold-soft); }
+
+/* ---------- Layout pass: centered, sized to fit one screen ---------- */
+.hero-gallery { padding-block: 10px 34px; }
+.hero-gallery .hero-copy { margin-inline: auto; justify-items: center; text-align: center; grid-template-columns: 1fr; max-width: 720px; }
+.hero-gallery .hero-copy .icon { grid-row: auto; width: 76px; height: 76px; border-radius: 18px; margin-bottom: 14px; }
+.hero-gallery .eyebrow, .hero-gallery h1 { align-self: auto; grid-column: 1; }
+.hero-gallery .eyebrow { margin: 0 0 6px; display: block; }
+.hero-gallery .lede { margin: 14px auto 22px; }
+.hero-gallery .cta { justify-content: center; }
+
+.gallery-head { justify-content: center; margin-bottom: 22px; }
+.strip-area { position: relative; }
+/* The row fades out at its ends, so the next screen reads as "more". */
+.strip { -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.strip figure { scroll-snap-align: center; }
+.strip[data-for="duo"] .frame img { height: clamp(220px, 27vw, 400px); }
+.strip[data-for="iphone"] .frame img { height: clamp(380px, 36vw, 500px); }
+.strip[data-for="ipad"] .frame img { height: clamp(340px, 32vw, 460px); }
+.strip figcaption { text-align: center; justify-self: center; }
+
+/* Arrows sit on the row's sides, level with the screens. */
+.strip-nav { position: absolute; inset: 0 0 56px 0; display: flex; align-items: center; justify-content: space-between; padding-inline: max(16px, calc((100vw - 1260px) / 2)); pointer-events: none; z-index: 2; }
+.strip-nav .round { pointer-events: auto; width: 52px; height: 52px; }
+.gallery { padding-bottom: 150px; }
+.strip-dots { margin-top: 2px; }
+
+@media (max-width: 720px) {
+  .hero-gallery .hero-copy .icon { width: 60px; height: 60px; border-radius: 14px; }
+  .hero-gallery .eyebrow { display: none; }
+  .strip { -webkit-mask-image: none; mask-image: none; }
+  .strip[data-for="duo"] .frame img { width: 100%; height: auto; }
+  .strip[data-for="iphone"] .frame img { height: 430px; }
+  .strip[data-for="ipad"] .frame img { height: 380px; }
+}
