@@ -623,3 +623,6 @@ details p { margin-top: 8px; color: var(--muted); }
   .strip[data-for="duo"] .frame.bezel .bezel-frame { width: 100%; height: auto; min-height: 0; }
   .unfold { margin-bottom: 22px; }
 }
+
+/* Apple frame boxes hug the bezel image exactly, so the screen percentages line up. */
+.strip[data-for="duo"] .frame.bezel { padding: 0 !important; border-radius: 0 !important; line-height: 0; }
