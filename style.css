@@ -20,6 +20,7 @@
   --glass-edge: rgba(255, 255, 255, 0.75);
   --glass-shadow: 0 10px 30px rgba(58, 40, 18, 0.10);
   --line: rgba(110, 90, 60, 0.16);
+  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
   --serif: "New York", ui-serif, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
   --radius: 26px;
@@ -92,8 +93,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .hero > * { min-width: 0; }
 .hero .icon { width: 92px; height: 92px; border-radius: 22px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35); margin-bottom: 22px; }
 .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.75; margin: 0 0 10px; }
-.hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.8rem, 6vw, 4.6rem); line-height: 1.02; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
-.hero .lede { font-family: var(--serif); font-size: clamp(1.2rem, 2vw, 1.45rem); line-height: 1.45; color: rgba(244, 239, 230, 0.82); margin: 16px 0 26px; max-width: 30ch; }
+.hero h1 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: clamp(2.8rem, 6vw, 4.6rem); line-height: 1.02; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+.hero .lede { font-family: var(--sans); font-size: clamp(1.2rem, 2vw, 1.45rem); line-height: 1.45; color: rgba(244, 239, 230, 0.82); margin: 16px 0 26px; max-width: 30ch; }
 .verse { font-family: var(--serif); font-style: italic; font-size: 1.25rem; line-height: 1.5; margin: 0 0 30px; padding-left: 16px; border-left: 2px solid var(--gold-soft); color: #f7f0e3; }
 .verse cite { display: block; margin-top: 6px; font-style: normal; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244, 239, 230, 0.6); }
 .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
@@ -120,9 +121,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 section.band { padding-block: 72px; }
 section.band.alt { background: var(--bg-2); }
 .section-head { display: grid; gap: 10px; margin-bottom: 36px; max-width: 640px; }
-.section-head h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.9rem, 3.6vw, 2.6rem); line-height: 1.12; margin: 0; text-wrap: balance; }
+.section-head h2 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: clamp(1.9rem, 3.6vw, 2.6rem); line-height: 1.12; margin: 0; text-wrap: balance; }
 .section-head p { margin: 0; color: var(--muted); font-size: 1.08rem; }
-.kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+.kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 
 /* Screens */
 .screens { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 26px; }
@@ -130,7 +131,7 @@ section.band.alt { background: var(--bg-2); }
 .screens .phone { border-radius: 36px; padding: 8px; }
 .screens .phone img { border-radius: 29px; }
 .screens figcaption { font-size: 15px; color: var(--muted); }
-.screens figcaption b { display: block; color: var(--ink); font-family: var(--serif); font-size: 1.12rem; font-weight: 600; }
+.screens figcaption b { display: block; color: var(--ink); font-size: 1.05rem; font-weight: 600; }
 
 /* Glass cards */
 .glass {
@@ -160,7 +161,7 @@ section.band.alt { background: var(--bg-2); }
 .promise { border-radius: 34px; padding: 44px 40px; color: #f4efe6; position: relative; overflow: hidden; isolation: isolate;
   background: radial-gradient(90% 70% at 85% 120%, rgba(240, 196, 138, 0.45), transparent 60%), linear-gradient(170deg, var(--sky-top), var(--sky-mid) 60%, var(--sky-low)); }
 .promise canvas.stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
-.promise h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.8rem, 3.4vw, 2.4rem); line-height: 1.15; margin: 0 0 26px; max-width: 18ch; text-wrap: balance; }
+.promise h2 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: clamp(1.8rem, 3.4vw, 2.4rem); line-height: 1.15; margin: 0 0 26px; max-width: 18ch; text-wrap: balance; }
 .promise ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
 .promise li b { display: block; font-size: 1.05rem; margin-bottom: 4px; color: var(--gold-soft); }
 .promise li span { color: rgba(244, 239, 230, 0.78); font-size: 15px; }
@@ -179,15 +180,15 @@ footer.site a:hover { color: var(--gold); }
 
 /* ---------- Document pages (privacy, support) ---------- */
 .page-hero { padding-block: 24px 120px; }
-.page-hero h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: 1.05; margin: 8px 0 10px; }
-.page-hero p { margin: 0; color: rgba(244, 239, 230, 0.78); font-family: var(--serif); font-size: 1.2rem; }
+.page-hero h1 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: clamp(2.4rem, 5vw, 3.4rem); line-height: 1.05; margin: 8px 0 10px; }
+.page-hero p { margin: 0; color: rgba(244, 239, 230, 0.78); font-family: var(--sans); font-size: 1.2rem; }
 .doc { margin-top: -70px; position: relative; padding: 34px clamp(22px, 5vw, 48px); display: grid; gap: 30px; }
 .doc section { display: grid; gap: 10px; }
-.doc h2 { font-family: var(--serif); font-weight: 600; font-size: 1.45rem; margin: 0; }
+.doc h2 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: 1.45rem; margin: 0; }
 .doc p, .doc ul { margin: 0; }
 .doc ul { padding-left: 1.2em; }
 .doc li + li { margin-top: 8px; }
-.doc .summary { font-family: var(--serif); font-size: 1.2rem; line-height: 1.55; }
+.doc .summary { font-size: 1.15rem; line-height: 1.55; }
 .email-card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; border-radius: 20px; background: rgba(185, 119, 58, 0.10); border: 1px solid rgba(185, 119, 58, 0.25); }
 .email-card .email { font-weight: 600; font-size: 1.1rem; user-select: all; overflow-wrap: anywhere; }
 .copy { font: inherit; font-size: 14px; font-weight: 600; color: var(--gold); background: transparent; border: 1px solid currentColor; border-radius: 999px; padding: 6px 14px; cursor: pointer; }
@@ -236,7 +237,7 @@ details p { margin-top: 8px; color: var(--muted); }
 .phone.folded img { border-radius: 24px; aspect-ratio: 756 / 1100; }
 .duo-band .duo.wide { max-width: 980px; margin-inline: auto; }
 .duo-points { list-style: none; padding: 0; margin: 34px auto 0; max-width: 980px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-.duo-points b { display: block; font-family: var(--serif); font-size: 1.15rem; margin-bottom: 4px; }
+.duo-points b { display: block; font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
 .duo-points li { color: var(--muted); font-size: 15px; }
 .duo-points li b { color: var(--ink); }
 @media (max-width: 960px) {
@@ -253,3 +254,55 @@ details p { margin-top: 8px; color: var(--muted); }
   .phone.folded img { border-radius: 16px; }
   .duo-points { grid-template-columns: 1fr; gap: 16px; }
 }
+
+/* ---------- Closer to the app ---------- */
+/* The app's ambient sky: night at the top, easing through a lavender mist into
+   the page, with pale hills at the horizon, as behind the Library. */
+:root { --mist: #e7e1ec; --hill: #cfc6dc; --hill-near: #e3dce8; }
+@media (prefers-color-scheme: dark) { :root { --mist: #1c1e40; --hill: #2a2c55; --hill-near: #1d1f42; } }
+.sky {
+  background:
+    radial-gradient(70% 40% at 50% 92%, rgba(255, 255, 255, 0.35), transparent 70%),
+    linear-gradient(180deg, #0c0f2c 0%, #1b1f4a 34%, #3e3f72 54%, #8f8bb4 70%, var(--mist) 86%, var(--bg) 100%);
+}
+@media (prefers-color-scheme: dark) {
+  .sky { background: linear-gradient(180deg, #0a0c24 0%, #151839 40%, #22254f 70%, var(--mist) 88%, var(--bg) 100%); }
+}
+.dunes .far { fill: var(--hill); opacity: 0.7; }
+.dunes .near { fill: var(--hill-near); }
+.dunes { height: 120px; }
+
+/* Liquid Glass, as on the app's cards and rows. */
+:root { --glass: rgba(255, 255, 255, 0.72); --glass-edge: rgba(255, 255, 255, 0.85); --glass-shadow: 0 8px 26px rgba(40, 36, 80, 0.09); }
+@media (prefers-color-scheme: dark) { :root { --glass: rgba(44, 46, 86, 0.55); --glass-edge: rgba(255, 255, 255, 0.10); --glass-shadow: 0 8px 26px rgba(0, 0, 0, 0.35); } }
+.glass { border-radius: 22px; }
+
+/* Library-style rows: a colored tile, a title and a quiet line under it. */
+.features { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.feature { grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; padding: 16px 18px; }
+.feature h3 { font-size: 1.06rem; font-weight: 600; margin: 0 0 2px; }
+.feature p { font-size: 15px; }
+.badge { width: 44px; height: 44px; border-radius: 10px; }
+@media (max-width: 1000px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .features { grid-template-columns: 1fr; } .feature { grid-template-columns: auto minmax(0, 1fr); } }
+
+/* The Today card, as it opens the Library. */
+.today-card {
+  position: relative; overflow: hidden; isolation: isolate; text-align: left;
+  margin: 4px 0 28px; padding: 18px 20px 16px; border-radius: 24px; max-width: 440px;
+  background: linear-gradient(170deg, #121539, #0d102b);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+.today-card canvas.stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.today-card .tc-label { font-size: 12px; font-weight: 700; letter-spacing: 0.18em; color: rgba(244, 239, 230, 0.6); }
+.today-card .tc-verse { font-family: var(--serif); font-size: 1.32rem; line-height: 1.42; color: #f7f1e6; margin: 10px 0 14px; }
+.today-card .tc-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.today-card .tc-ref { font-weight: 600; font-size: 15px; color: #f4efe6; }
+.glass-btn {
+  display: inline-flex; align-items: center; padding: 7px 16px; border-radius: 999px; font-size: 15px; color: #f4efe6;
+  background: rgba(255, 255, 255, 0.10); border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.hero h1 { font-size: clamp(2.8rem, 5.6vw, 4.2rem); }
+.eyebrow { letter-spacing: 0.16em; }
