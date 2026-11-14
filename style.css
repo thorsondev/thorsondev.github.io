@@ -645,3 +645,12 @@ details p { margin-top: 8px; color: var(--muted); }
   .strip[data-for="duo"] figure.unfold { width: calc(100vw - 56px); }
   .strip .frame.unfold-stage { width: 100%; height: auto; min-height: 0; }
 }
+
+/* The unfolding Duo's images keep their own geometry inside the carousel. */
+.strip[data-for="duo"] .frame.unfold-stage img.unfold-bezel {
+  position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; min-height: 0;
+  background: none; border-radius: 0; display: block;
+}
+.strip[data-for="duo"] .frame.unfold-stage img.unfold-screen { position: absolute; max-width: none; min-height: 0; background: none; display: block; object-fit: cover; }
+.strip[data-for="duo"] .frame.unfold-stage .unfold-open img.unfold-screen { left: 3.8797%; top: 5.3405%; width: 92.2405%; height: 89.3191%; border-radius: 2.2%; }
+.strip[data-for="duo"] .frame.unfold-stage .unfold-closed img.unfold-screen { left: 5.5909%; top: 3.6463%; width: 88.8183%; height: 92.7074%; border-radius: 0; }
