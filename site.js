@@ -46,54 +46,102 @@
       setTimeout(() => (b.textContent = "Copy"), 1800);
     });
   });
-  // The device switcher: one frame that takes each device's true shape.
+  // The gallery: the switch picks the device (the frame takes its true shape),
+  // the tabs pick the screen, and both stay put as the other changes.
   const show = document.querySelector(".showcase");
   if (show) {
     const stage = show.querySelector(".device-stage");
     const device = show.querySelector(".device");
-    const buttons = [...show.querySelectorAll(".device-switch button")];
+    const shot = show.querySelector("img.shot");
+    const devices = [...show.querySelectorAll(".device-switch button")];
+    const tabs = [...show.querySelectorAll(".screen-tabs button")];
     const caption = show.querySelector(".device-caption");
-    // Screen proportions (width / height) from the real screenshots.
-    const shapes = { duo: 2853 / 2007, iphone: 1206 / 2622, ipad: 1668 / 2420 };
+    // Screen proportions (width / height) of each device's screenshots.
+    const shapes = { duo: 2853 / 2007, iphone: 1320 / 2868, ipad: 2064 / 2752 };
+    const names = { duo: "the iPhone Duo", iphone: "iPhone", ipad: "iPad" };
     const captions = {
-      duo: "Opened like a book: the Library on one page, today's reflection on the other.",
-      iphone: "Everything in one hand: today's verse, your streak and the day's reflection.",
-      ipad: "Room to read: the Library and Reading Plans side by side.",
+      library: { duo: "The Library on one page, Reading Plans on the other.", iphone: "Today's verse, your streak and the day's reflection.", ipad: "The Library beside Reading Plans." },
+      reflection: { duo: "Today's verse on one page, its reflection and prayer on the other.", other: "A short reflection and prayer on today's verse, written on your device." },
+      reader: { duo: "Two pages, set like a printed Bible.", other: "Scripture set like a printed Bible, with verse-by-verse listening." },
+      quiet: { duo: "Today's verse beside five quiet minutes of prayer.", other: "Breathe, read the verse slowly and pray. About five minutes." },
+      chat: { duo: "Bible Chat answers on one page, with the verses beside it.", other: "Questions answered from Scripture, privately, on your device." },
     };
+    const alts = { library: "the Library", reflection: "Today's Reflection", reader: "the reader", quiet: "a quiet time", chat: "Bible Chat" };
+    let state = { device: show.dataset.device || "duo", screen: "reflection" };
+    let token = 0;
+
     const fit = () => {
-      const name = show.dataset.device;
       const pad = parseFloat(getComputedStyle(device).getPropertyValue("--pad")) || 12;
       const box = stage.getBoundingClientRect();
-      const a = shapes[name];
+      const a = shapes[state.device];
       let w = box.width - 2 * pad, h = w / a;
       if (h > box.height - 2 * pad) { h = box.height - 2 * pad; w = h * a; }
       device.style.width = `${w + 2 * pad}px`;
       device.style.height = `${h + 2 * pad}px`;
     };
-    const pick = (name, focus) => {
-      show.dataset.device = name;
-      buttons.forEach((b) => {
-        const on = b.dataset.device === name;
-        b.setAttribute("aria-checked", on);
-        b.tabIndex = on ? 0 : -1;
-        if (on && focus) b.focus();
-      });
-      caption.textContent = captions[name];
+    const update = (focusEl) => {
+      show.dataset.device = state.device;
+      devices.forEach((b) => { const on = b.dataset.device === state.device; b.setAttribute("aria-checked", on); b.tabIndex = on ? 0 : -1; });
+      tabs.forEach((b) => { const on = b.dataset.screen === state.screen; b.setAttribute("aria-selected", on); b.tabIndex = on ? 0 : -1; });
+      const c = captions[state.screen];
+      caption.textContent = c[state.device] || c.other;
       fit();
+      // Fade to the new screenshot once it has loaded, so nothing flashes empty.
+      const src = `img/${state.device}-${state.screen}.jpg`;
+      const mine = ++token;
+      shot.classList.add("swap");
+      const next = new Image();
+      next.onload = next.onerror = () => {
+        if (mine !== token) return;
+        setTimeout(() => {
+          shot.src = src;
+          shot.alt = `Be Still on ${names[state.device]}: ${alts[state.screen]}.`;
+          shot.classList.remove("swap");
+        }, 120);
+      };
+      next.src = src;
+      focusEl?.focus();
     };
-    buttons.forEach((b, i) => {
-      b.addEventListener("click", () => pick(b.dataset.device));
+    const order = tabs.map((b) => b.dataset.screen);
+    const step = (n, focus) => {
+      state.screen = order[(order.indexOf(state.screen) + n + order.length) % order.length];
+      update(focus ? tabs[order.indexOf(state.screen)] : null);
+    };
+
+    devices.forEach((b, i) => {
+      b.addEventListener("click", () => { state.device = b.dataset.device; update(); });
       b.addEventListener("keydown", (e) => {
-        const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
-        if (!step) return;
+        const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (!d) return;
         e.preventDefault();
-        pick(buttons[(i + step + buttons.length) % buttons.length].dataset.device, true);
+        const next = devices[(i + d + devices.length) % devices.length];
+        state.device = next.dataset.device; update(next);
       });
     });
+    tabs.forEach((b) => {
+      b.addEventListener("click", () => { state.screen = b.dataset.screen; update(); });
+      b.addEventListener("keydown", (e) => {
+        const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (d) { e.preventDefault(); step(d, true); }
+      });
+    });
+    // Swipe the frame for the next or previous screen.
+    let startX = null;
+    device.addEventListener("pointerdown", (e) => { startX = e.clientX; });
+    device.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX; startX = null;
+      if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+    });
+    device.addEventListener("pointercancel", () => { startX = null; });
+
     addEventListener("resize", fit);
     new ResizeObserver(fit).observe(stage);
-    fit();
-    // Animate shape changes only after the first size is set.
+    update();
     requestAnimationFrame(() => requestAnimationFrame(() => show.classList.add("ready")));
+    // Warm the cache for the screens a visitor is likely to tap next.
+    addEventListener("load", () => {
+      for (const d of Object.keys(shapes)) for (const s of order) { const i = new Image(); i.src = `img/${d}-${s}.jpg`; }
+    });
   }
 })();

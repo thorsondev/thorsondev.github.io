@@ -413,3 +413,21 @@ details p { margin-top: 8px; color: var(--muted); }
 @media (max-width: 520px) { .device-stage { aspect-ratio: 1; } }
 
 @media (max-width: 520px) { .hero-duo .eyebrow { display: none; } .hero-duo .hero-copy .icon { grid-row: 1; } .hero-duo h1 { align-self: center; } }
+
+/* ---------- One gallery: the device switch picks the frame, the tabs pick the screen ---------- */
+.device .screen img.shot {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  opacity: 1; transform: none; transition: opacity .3s ease, transform .5s cubic-bezier(.2, .9, .25, 1);
+}
+.device .screen img.shot.swap { opacity: 0; transform: scale(.985); }
+.device { touch-action: pan-y; cursor: grab; }
+.screen-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; margin-top: -6px; }
+.screen-tabs button {
+  font: 600 14px/1 var(--sans); color: rgba(244, 239, 230, 0.62); background: none; border: 0; cursor: pointer;
+  padding: 8px 12px; border-radius: 999px; transition: color .25s, background .25s;
+}
+.screen-tabs button:hover { color: #fff; }
+.screen-tabs button[aria-selected="true"] { color: var(--gold-soft); background: rgba(255, 255, 255, 0.10); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14); }
+.device-caption { margin-top: -6px; }
+@media (max-width: 520px) { .screen-tabs button { padding: 7px 9px; font-size: 13px; } }
+@media (prefers-reduced-motion: reduce) { .device .screen img.shot { transition: none; } }
