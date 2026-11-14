@@ -654,3 +654,20 @@ details p { margin-top: 8px; color: var(--muted); }
 .strip[data-for="duo"] .frame.unfold-stage img.unfold-screen { position: absolute; max-width: none; min-height: 0; background: none; display: block; object-fit: cover; }
 .strip[data-for="duo"] .frame.unfold-stage .unfold-open img.unfold-screen { left: 3.8797%; top: 5.3405%; width: 92.2405%; height: 89.3191%; border-radius: 2.2%; }
 .strip[data-for="duo"] .frame.unfold-stage .unfold-closed img.unfold-screen { left: 5.5909%; top: 3.6463%; width: 88.8183%; height: 92.7074%; border-radius: 0; }
+
+/* Folding back runs the opening in reverse: the left page closes into the
+   hinge, then the cover comes back over it as the phone slides home. */
+.unfold-stage { transition: transform 1.4s cubic-bezier(.45, 0, .2, 1); }
+.unfold-open { transition: clip-path .7s cubic-bezier(.6, 0, .8, .4), opacity .15s linear .78s; }
+.unfold-closed { transition: transform .62s cubic-bezier(.15, .55, .3, 1) .68s, filter .62s .68s; }
+
+/* Fold / Unfold: a small glass pair under the Duo. */
+.fold-controls { display: flex; justify-content: center; gap: 4px; width: max-content; margin: 2px auto 14px; padding: 4px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.gallery:not([data-device="duo"]) .fold-controls { display: none; }
+.fold-controls button { display: inline-flex; align-items: center; gap: 7px; padding: 8px 16px; border: 0; border-radius: 999px; cursor: pointer;
+  font: 600 14px/1 var(--sans); color: rgba(244, 239, 230, 0.75); background: none; transition: background .25s, color .25s; }
+.fold-controls button:hover { color: #fff; }
+.fold-controls button[aria-pressed="true"] { color: var(--gold-soft); background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2); }
+.fold-controls svg { width: 22px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; }

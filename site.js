@@ -81,26 +81,50 @@
     const unfold = duoStrip?.querySelector(".unfold");
     const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let unfoldTimer;
-    const playUnfold = (delay = 450) => {
-      if (!unfold || still) return;
+    const foldButtons = [...gallery.querySelectorAll(".fold-controls button")];
+    const showState = (open) => foldButtons.forEach((b) => b.setAttribute("aria-pressed", (b.dataset.fold === "open") === open));
+    // Open: the cover folds to the spine, the left page opens; then the other screens fade in.
+    const openDuo = (delay = 0) => {
+      if (!unfold) return;
       clearTimeout(unfoldTimer);
-      duoStrip.classList.add("folded");
-      unfold.classList.add("no-anim");
-      unfold.classList.remove("is-open");
-      void unfold.offsetWidth;
-      unfold.classList.remove("no-anim");
+      showState(true);
       unfoldTimer = setTimeout(() => {
         unfold.classList.add("is-open");
-        unfoldTimer = setTimeout(() => duoStrip.classList.remove("folded"), 1350);
-      }, delay);
+        unfoldTimer = setTimeout(() => duoStrip.classList.remove("folded"), still ? 0 : 1350);
+      }, still ? 0 : delay);
     };
-    if (unfold && !still) {
+    // Fold: back to the first screen, the other screens fade, the Duo closes.
+    const foldDuo = () => {
+      if (!unfold) return;
+      clearTimeout(unfoldTimer);
+      showState(false);
+      duoStrip.style.scrollBehavior = "auto"; duoStrip.scrollLeft = 0; duoStrip.style.scrollBehavior = "";
       duoStrip.classList.add("folded");
+      unfold.classList.remove("is-open");
+    };
+    const playUnfold = (delay = 450) => {
+      if (!unfold) return;
+      // Start closed without animating, then open.
+      unfold.classList.add("no-anim");
+      duoStrip.classList.add("folded");
+      unfold.classList.remove("is-open");
+      showState(false);
+      void unfold.offsetWidth;
+      unfold.classList.remove("no-anim");
+      openDuo(delay);
+    };
+    foldButtons.forEach((b) => b.addEventListener("click", () => (b.dataset.fold === "open" ? openDuo() : foldDuo())));
+    if (unfold && !still) {
+      unfold.classList.add("no-anim");
+      duoStrip.classList.add("folded");
+      showState(false);
+      void unfold.offsetWidth;
+      unfold.classList.remove("no-anim");
       const seen = new IntersectionObserver((entries) => {
-        if (entries.some((e) => e.isIntersecting)) { seen.disconnect(); if (gallery.dataset.device === "duo") playUnfold(600); }
+        if (entries.some((e) => e.isIntersecting)) { seen.disconnect(); if (gallery.dataset.device === "duo" && !unfold.classList.contains("is-open")) openDuo(600); }
       }, { threshold: 0.45 });
       seen.observe(unfold);
-    } else unfold?.classList.add("is-open");
+    } else { unfold?.classList.add("is-open"); showState(true); }
 
     const pick = (name, focus) => {
       gallery.dataset.device = name;
