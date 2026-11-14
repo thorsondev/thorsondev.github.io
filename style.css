@@ -550,3 +550,18 @@ details p { margin-top: 8px; color: var(--muted); }
   .strip[data-for="iphone"] .frame img { height: 430px; }
   .strip[data-for="ipad"] .frame img { height: 380px; }
 }
+
+/* Desktop: a compact title block so the screens and their captions fit the first screen. */
+@media (min-width: 721px) {
+  .hero-gallery { padding-block: 0 26px; }
+  .hero-gallery .hero-copy { grid-template-columns: auto auto; justify-content: center; column-gap: 18px; text-align: left; justify-items: start; }
+  .hero-gallery .hero-copy .icon { grid-row: 1 / span 2; grid-column: 1; width: 72px; height: 72px; margin: 0; }
+  .hero-gallery .eyebrow { grid-column: 2; align-self: end; margin: 0; }
+  .hero-gallery h1 { grid-column: 2; align-self: start; font-size: clamp(2.6rem, 4.4vw, 3.6rem); }
+  .hero-gallery .lede, .hero-gallery .cta { grid-column: 1 / -1; justify-self: center; text-align: center; }
+  .hero-gallery .lede { max-width: 62ch; margin: 12px auto 18px; }
+  .gallery-head { margin-bottom: 18px; }
+  .strip[data-for="duo"] .frame img { height: min(27vw, 44vh, 400px); min-height: 220px; }
+  .strip[data-for="iphone"] .frame img { height: min(36vw, 52vh, 500px); min-height: 360px; }
+  .strip[data-for="ipad"] .frame img { height: min(32vw, 48vh, 460px); min-height: 320px; }
+}
