@@ -565,3 +565,9 @@ details p { margin-top: 8px; color: var(--muted); }
   .strip[data-for="iphone"] .frame img { height: min(36vw, 52vh, 500px); min-height: 360px; }
   .strip[data-for="ipad"] .frame img { height: min(32vw, 48vh, 460px); min-height: 320px; }
 }
+@media (min-width: 721px) {
+  .hero-gallery .hero-copy { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .hero-gallery .hero-copy .icon { display: none; }
+  .hero-gallery .eyebrow, .hero-gallery h1 { grid-column: 1; justify-self: center; }
+  .strip[data-for="duo"] .frame img { height: min(27vw, 41vh, 400px); }
+}
