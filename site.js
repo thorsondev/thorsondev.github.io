@@ -53,8 +53,17 @@
     const strips = [...gallery.querySelectorAll(".strip")];
     const [prev, next] = gallery.querySelectorAll(".strip-nav .round");
     const current = () => strips.find((s) => !s.hidden);
+    const dots = [...gallery.querySelectorAll(".strip-dots span")];
     const updateNav = () => {
-      const s = current(); if (!s || !prev) return;
+      const s = current(); if (!s) return;
+      // Which screen is in view, for the dots under the row.
+      const figs = [...s.querySelectorAll("figure")];
+      const left = s.getBoundingClientRect().left;
+      let at = 0, best = Infinity;
+      figs.forEach((f, i) => { const d = Math.abs(f.getBoundingClientRect().left - left - parseFloat(getComputedStyle(s).paddingLeft)); if (d < best) { best = d; at = i; } });
+      if (s.scrollLeft + s.clientWidth > s.scrollWidth - 8) at = figs.length - 1;
+      dots.forEach((d, i) => d.classList.toggle("on", i === at));
+      if (!prev) return;
       prev.disabled = s.scrollLeft < 8;
       next.disabled = s.scrollLeft + s.clientWidth > s.scrollWidth - 8;
     };

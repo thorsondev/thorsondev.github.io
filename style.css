@@ -511,3 +511,8 @@ details p { margin-top: 8px; color: var(--muted); }
 .strip figure { width: min-content; }
 .strip .frame { width: max-content; }
 @media (max-width: 720px) { .strip[data-for="duo"] figure { width: calc(100vw - 56px); } .strip[data-for="duo"] .frame { width: auto; } }
+
+/* Page dots: where you are in the row, as on an iPhone. */
+.strip-dots { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
+.strip-dots span { width: 7px; height: 7px; border-radius: 999px; background: rgba(255, 255, 255, 0.3); transition: width .3s, background .3s; }
+.strip-dots span.on { width: 22px; background: var(--gold-soft); }
