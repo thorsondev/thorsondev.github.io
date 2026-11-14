@@ -626,3 +626,8 @@ details p { margin-top: 8px; color: var(--muted); }
 
 /* Apple frame boxes hug the bezel image exactly, so the screen percentages line up. */
 .strip[data-for="duo"] .frame.bezel { padding: 0 !important; border-radius: 0 !important; line-height: 0; }
+
+/* Cards in a row keep their own height: extra space never stretches a frame. */
+.strip { align-items: flex-start; }
+.strip figure { align-content: start; }
+.strip .frame { align-self: start; }
