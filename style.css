@@ -310,3 +310,69 @@ details p { margin-top: 8px; color: var(--muted); }
 /* The folded Duo leans on the open one's right side, clear of the Today card. */
 .phone.folded { left: auto; right: -4%; bottom: -12%; transform: rotate(6deg); }
 @media (max-width: 960px) { .phone.folded { left: auto; right: -1%; } .duo-stage { padding-left: 0; padding-right: 6%; } }
+
+/* ---------- See it on each device ---------- */
+/* One frame that changes shape: the open Duo, the iPhone, the iPad. */
+.phone.folded { display: none; }
+.showcase { display: grid; justify-items: center; gap: 22px; width: 100%; }
+.device-stage { width: 100%; aspect-ratio: 1.36; display: grid; place-items: center; }
+.device {
+  --pad: 12px; --r: 34px;
+  position: relative; padding: var(--pad); border-radius: var(--r);
+  width: 100%; height: 100%;
+  background: linear-gradient(160deg, #4a4560, #19182c 55%, #2c2943);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  transition: width .7s cubic-bezier(.2, .9, .25, 1), height .7s cubic-bezier(.2, .9, .25, 1), border-radius .7s, padding .7s;
+}
+.device .screen { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: calc(var(--r) - var(--pad)); transition: border-radius .7s; background: #0c0f2c; }
+.device .screen img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  opacity: 0; transform: scale(1.04); transition: opacity .45s ease, transform .7s cubic-bezier(.2, .9, .25, 1);
+}
+.showcase[data-device="duo"] img[data-for="duo"],
+.showcase[data-device="iphone"] img[data-for="iphone"],
+.showcase[data-device="ipad"] img[data-for="ipad"] { opacity: 1; transform: none; }
+.showcase[data-device="iphone"] .device { --pad: 9px; --r: 44px; }
+.showcase[data-device="ipad"] .device { --pad: 14px; --r: 30px; }
+.device .hinge { top: var(--pad); bottom: var(--pad); transition: opacity .4s; }
+.showcase:not([data-device="duo"]) .device .hinge { opacity: 0; }
+.device .island { position: absolute; top: calc(var(--pad) + 9px); left: 50%; width: 30%; max-width: 92px; height: 22px; border-radius: 999px; background: #000; transform: translateX(-50%) scale(.6); opacity: 0; transition: opacity .3s, transform .5s; }
+.showcase[data-device="iphone"] .device .island { opacity: 1; transform: translateX(-50%); }
+
+/* The switch: Liquid Glass, with a glass thumb that slides to the device. */
+.device-switch {
+  position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 5px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.10); border: 1px solid rgba(255, 255, 255, 0.18);
+  -webkit-backdrop-filter: blur(20px) saturate(170%); backdrop-filter: blur(20px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+.device-switch .thumb {
+  position: absolute; top: 5px; bottom: 5px; left: 5px; width: calc((100% - 10px) / 3); border-radius: 999px;
+  background: rgba(255, 255, 255, 0.20); border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: transform .5s cubic-bezier(.3, 1.3, .4, 1);
+}
+.showcase[data-device="iphone"] .device-switch .thumb { transform: translateX(100%); }
+.showcase[data-device="ipad"] .device-switch .thumb { transform: translateX(200%); }
+.device-switch button {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 9px 18px; border: 0; background: none; border-radius: 999px; cursor: pointer;
+  font: 600 15px/1 var(--sans); color: rgba(244, 239, 230, 0.75); white-space: nowrap; transition: color .3s;
+}
+.device-switch button[aria-checked="true"] { color: #fff; }
+.device-switch button:hover { color: #fff; }
+.device-switch svg { width: 26px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.device-switch button[aria-checked="true"] svg { stroke: var(--gold-soft); }
+.device-caption { margin: 0; min-height: 2.6em; text-align: center; font-size: 15px; color: rgba(244, 239, 230, 0.75); max-width: 40ch; }
+@media (max-width: 960px) {
+  .device-stage { aspect-ratio: 1.05; max-width: 640px; }
+}
+@media (max-width: 520px) {
+  .device-switch button { padding: 9px 12px; font-size: 14px; gap: 6px; }
+  .device-switch svg { width: 20px; }
+  .showcase[data-device="iphone"] .device { --pad: 7px; --r: 32px; }
+  .device { --pad: 8px; --r: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .device, .device .screen, .device .screen img, .device-switch .thumb { transition: none; }
+}

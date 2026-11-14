@@ -46,4 +46,52 @@
       setTimeout(() => (b.textContent = "Copy"), 1800);
     });
   });
+  // The device switcher: one frame that takes each device's true shape.
+  const show = document.querySelector(".showcase");
+  if (show) {
+    const stage = show.querySelector(".device-stage");
+    const device = show.querySelector(".device");
+    const buttons = [...show.querySelectorAll(".device-switch button")];
+    const caption = show.querySelector(".device-caption");
+    // Screen proportions (width / height) from the real screenshots.
+    const shapes = { duo: 2853 / 2007, iphone: 1206 / 2622, ipad: 1668 / 2420 };
+    const captions = {
+      duo: "Opened like a book: the Library on one page, today's reflection on the other.",
+      iphone: "Everything in one hand: today's verse, your streak and the day's reflection.",
+      ipad: "Room to read: the Library and Reading Plans side by side.",
+    };
+    const fit = () => {
+      const name = show.dataset.device;
+      const pad = parseFloat(getComputedStyle(device).getPropertyValue("--pad")) || 12;
+      const box = stage.getBoundingClientRect();
+      const a = shapes[name];
+      let w = box.width - 2 * pad, h = w / a;
+      if (h > box.height - 2 * pad) { h = box.height - 2 * pad; w = h * a; }
+      device.style.width = `${w + 2 * pad}px`;
+      device.style.height = `${h + 2 * pad}px`;
+    };
+    const pick = (name, focus) => {
+      show.dataset.device = name;
+      buttons.forEach((b) => {
+        const on = b.dataset.device === name;
+        b.setAttribute("aria-checked", on);
+        b.tabIndex = on ? 0 : -1;
+        if (on && focus) b.focus();
+      });
+      caption.textContent = captions[name];
+      fit();
+    };
+    buttons.forEach((b, i) => {
+      b.addEventListener("click", () => pick(b.dataset.device));
+      b.addEventListener("keydown", (e) => {
+        const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (!step) return;
+        e.preventDefault();
+        pick(buttons[(i + step + buttons.length) % buttons.length].dataset.device, true);
+      });
+    });
+    addEventListener("resize", fit);
+    new ResizeObserver(fit).observe(stage);
+    fit();
+  }
 })();
