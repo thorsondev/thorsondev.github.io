@@ -411,3 +411,5 @@ details p { margin-top: 8px; color: var(--muted); }
 .showcase:not(.ready) .device, .showcase:not(.ready) .device .screen { transition: none; }
 @media (max-width: 960px) { .device-stage { aspect-ratio: 1.25; } }
 @media (max-width: 520px) { .device-stage { aspect-ratio: 1; } }
+
+@media (max-width: 520px) { .hero-duo .eyebrow { display: none; } .hero-duo .hero-copy .icon { grid-row: 1; } .hero-duo h1 { align-self: center; } }
