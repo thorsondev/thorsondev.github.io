@@ -212,3 +212,40 @@ details p { margin-top: 8px; color: var(--muted); }
   .nav a { padding: 6px 10px; font-size: 14px; }
   .brand span { display: none; }
 }
+
+/* ---------- The iPhone Duo ---------- */
+.hero-duo { grid-template-columns: 1fr; text-align: center; gap: 46px; padding-block: 30px 120px; }
+.hero-duo .hero-copy { max-width: 680px; margin-inline: auto; display: grid; justify-items: center; }
+.hero-duo .lede { max-width: 34ch; margin-inline: auto; }
+.hero-duo .verse { border-left: 0; padding-left: 0; }
+.hero-duo .cta { justify-content: center; }
+.duo-stage { position: relative; max-width: 940px; width: 100%; margin-inline: auto; padding-right: 9%; }
+.duo {
+  position: relative; border-radius: 34px; padding: 12px;
+  background: linear-gradient(160deg, #4a4560, #19182c 55%, #2c2943);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.duo img { width: 100%; height: auto; aspect-ratio: 2853 / 2007; object-fit: cover; border-radius: 24px; }
+/* The fold: a soft crease down the middle of the inner screen. */
+.duo .hinge {
+  position: absolute; top: 12px; bottom: 12px; left: 50%; width: 22px; transform: translateX(-50%); pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.10) 40%, rgba(255, 255, 255, 0.18) 50%, rgba(0, 0, 0, 0.10) 60%, transparent);
+}
+.phone.folded {
+  position: absolute; right: 0; bottom: -6%; width: 25%; border-radius: 30px; padding: 7px;
+  transform: rotate(5deg); background: linear-gradient(160deg, #4a4560, #19182c);
+}
+.phone.folded img { border-radius: 24px; aspect-ratio: 756 / 1100; }
+.duo-band .duo.wide { max-width: 980px; margin-inline: auto; }
+.duo-points { list-style: none; padding: 0; margin: 34px auto 0; max-width: 980px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.duo-points b { display: block; font-family: var(--serif); font-size: 1.15rem; margin-bottom: 4px; }
+.duo-points li { color: var(--muted); font-size: 15px; }
+.duo-points li b { color: var(--ink); }
+@media (max-width: 860px) {
+  .duo { border-radius: 22px; padding: 7px; }
+  .duo img { border-radius: 16px; }
+  .duo .hinge { top: 7px; bottom: 7px; width: 14px; }
+  .phone.folded { width: 30%; border-radius: 20px; padding: 5px; bottom: -10%; }
+  .phone.folded img { border-radius: 16px; }
+  .duo-points { grid-template-columns: 1fr; gap: 16px; }
+}
