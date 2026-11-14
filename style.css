@@ -376,3 +376,14 @@ details p { margin-top: 8px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) {
   .device, .device .screen, .device .screen img, .device-switch .thumb { transition: none; }
 }
+
+/* Small screens: the switch fits the width, and the night lasts past it. */
+.showcase, .device-stage { min-width: 0; max-width: 100%; }
+.device-switch { max-width: 100%; }
+@media (max-width: 960px) {
+  .sky { background: linear-gradient(180deg, #0c0f2c 0%, #1b1f4a 45%, #34366a 75%, #6e6a9a 90%, var(--mist) 97%, var(--bg) 100%); }
+}
+@media (max-width: 520px) {
+  .device-switch button { padding: 9px 10px; font-size: 13px; gap: 5px; }
+  .device-switch svg { width: 18px; height: 16px; }
+}
