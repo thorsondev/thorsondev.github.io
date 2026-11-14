@@ -60,7 +60,7 @@ li + li { margin-top: 6px; }
 .verse { font-family: var(--serif); font-style: italic; font-size: 1.2rem; border-left: 2px solid var(--accent); padding-left: 16px; margin: 0; }
 .verse cite { display: block; font-style: normal; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
 
-.badge { display: inline-block; padding: 10px 18px; border-radius: 999px; background: var(--ink); color: var(--bg); font-weight: 600; font-size: 15px; text-decoration: none; }
+.badge { display: inline-block; white-space: nowrap; padding: 10px 18px; border-radius: 999px; background: var(--ink); color: var(--bg); font-weight: 600; font-size: 15px; text-decoration: none; }
 
 .contact { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
 .contact .email { font-family: var(--sans); font-weight: 600; font-size: 1.1rem; user-select: all; overflow-wrap: anywhere; }
