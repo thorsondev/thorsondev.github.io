@@ -691,3 +691,14 @@ details p { margin-top: 8px; color: var(--muted); }
 .strip figcaption > span { grid-area: 1 / 1; transition: opacity .6s ease .2s; }
 .strip .cap-folded, .strip.folded .cap-open { opacity: 0; }
 .strip.folded .cap-folded { opacity: 1; }
+
+/* Be Still home: everything on one centered axis, the app icon at the top
+   (no small icon in the corner), the whole block lifted toward the top. */
+.topbar-center { justify-content: center; padding-block: 12px 0; }
+.hero-gallery { padding-top: 0; }
+.hero-gallery .hero-copy { grid-template-columns: 1fr !important; justify-items: center !important; text-align: center !important; }
+.hero-gallery .hero-copy .icon { display: block !important; grid-row: auto !important; grid-column: 1 !important; width: 64px; height: 64px; border-radius: 15px; margin: 10px 0 10px !important; }
+.hero-gallery .eyebrow, .hero-gallery h1, .hero-gallery .lede, .hero-gallery .cta { grid-column: 1 !important; justify-self: center !important; align-self: auto !important; }
+.hero-gallery .cta { justify-content: center; }
+.gallery-head { justify-content: center !important; align-items: center !important; }
+@media (max-width: 720px) { .gallery .device-switch { margin-inline: auto; } .hero-gallery .hero-copy .icon { margin-top: 6px !important; } }
