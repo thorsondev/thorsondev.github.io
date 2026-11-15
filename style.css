@@ -702,3 +702,12 @@ details p { margin-top: 8px; color: var(--muted); }
 .hero-gallery .cta { justify-content: center; }
 .gallery-head { justify-content: center !important; align-items: center !important; }
 @media (max-width: 720px) { .gallery .device-switch { margin-inline: auto; } .hero-gallery .hero-copy .icon { margin-top: 6px !important; } }
+
+/* The closed Duo's outer screen is D-shaped: tight corners at the spine,
+   wide ones on the open edge (measured from Apple's bezel: about 15 and
+   100 px on a 764 x 1112 opening). Square screens poked out past them. */
+.strip[data-for="duo"] .frame.bezel .folded-duo .folded-screen,
+.strip[data-for="duo"] .frame.unfold-stage .unfold-closed img.unfold-screen,
+.unfold-closed .unfold-screen {
+  border-radius: 2% 13.4% 13.4% 2% / 1.4% 9.2% 9.2% 1.4%;
+}
