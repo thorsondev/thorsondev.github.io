@@ -638,9 +638,6 @@ details p { margin-top: 8px; color: var(--muted); }
   padding: 0; background: none; box-shadow: none; border-radius: 0;
   height: min(30vw, 46vh, 440px); min-height: 240px; width: auto; aspect-ratio: 3093 / 2247;
 }
-.strip.folded figure:not(.unfold), .strip.folded figure.unfold figcaption { opacity: 0; pointer-events: none; }
-.strip figure { transition: opacity .6s ease; }
-.strip figure.unfold figcaption { transition: opacity .6s ease .2s; }
 @media (max-width: 720px) {
   .strip[data-for="duo"] figure.unfold { width: calc(100vw - 56px); }
   .strip .frame.unfold-stage { width: 100%; height: auto; min-height: 0; }
@@ -671,3 +668,26 @@ details p { margin-top: 8px; color: var(--muted); }
 .fold-controls button:hover { color: #fff; }
 .fold-controls button[aria-pressed="true"] { color: var(--gold-soft); background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2); }
 .fold-controls svg { width: 22px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+
+/* Folded, every screen in the row shows on the Duo's outer screen: the closed
+   phone stands centered in its open frame's place, so the row never jumps. */
+.folded-duo {
+  position: absolute; top: 1.18%; left: 50%; height: 97.64%; aspect-ratio: 861 / 1200;
+  transform: translateX(-50%); opacity: 0; z-index: 2; pointer-events: none;
+  transition: opacity .6s ease;
+}
+.strip[data-for="duo"] .frame.bezel .folded-duo img {
+  position: absolute; display: block; max-width: none; min-height: 0; background: none;
+}
+.strip[data-for="duo"] .frame.bezel .folded-duo .folded-bezel { inset: 0; width: 100%; height: 100%; border-radius: 0; }
+.strip[data-for="duo"] .frame.bezel .folded-duo .folded-screen { left: 5.5909%; top: 3.6463%; width: 88.8183%; height: 92.7074%; object-fit: cover; border-radius: 0; }
+.strip .frame.bezel .bezel-screen, .strip .frame.bezel .bezel-frame { transition: opacity .6s ease; }
+.strip.folded .frame.bezel .bezel-screen, .strip.folded .frame.bezel .bezel-frame { opacity: 0; }
+.strip.folded .folded-duo { opacity: 1; }
+.strip.folded .frame.bezel { filter: none; }
+.strip.folded .folded-duo { filter: drop-shadow(0 22px 30px rgba(0, 0, 0, 0.4)); }
+/* Captions follow the fold. */
+.strip figcaption:has(.cap-folded) { display: grid; }
+.strip figcaption > span { grid-area: 1 / 1; transition: opacity .6s ease .2s; }
+.strip .cap-folded, .strip.folded .cap-open { opacity: 0; }
+.strip.folded .cap-folded { opacity: 1; }

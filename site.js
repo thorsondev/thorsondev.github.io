@@ -54,6 +54,7 @@
     const [prev, next] = gallery.querySelectorAll(".strip-nav .round");
     const current = () => strips.find((s) => !s.hidden);
     const dots = [...gallery.querySelectorAll(".strip-dots span")];
+    let shown = 0;
     const updateNav = () => {
       const s = current(); if (!s) return;
       // Which screen is in view, for the dots under the row.
@@ -63,6 +64,7 @@
       const mid = left + s.clientWidth / 2;
       figs.forEach((f, i) => { const r = f.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < best) { best = d; at = i; } });
       if (s.scrollLeft + s.clientWidth > s.scrollWidth - 8) at = figs.length - 1;
+      shown = at;
       dots.forEach((d, i) => d.classList.toggle("on", i === at));
       if (!prev) return;
       prev.disabled = s.scrollLeft < 8;
@@ -83,22 +85,23 @@
     let unfoldTimer;
     const foldButtons = [...gallery.querySelectorAll(".fold-controls button")];
     const showState = (open) => foldButtons.forEach((b) => b.setAttribute("aria-pressed", (b.dataset.fold === "open") === open));
-    // Open: the cover folds to the spine, the left page opens; then the other screens fade in.
+    // Open: the cover folds to the spine, the left page opens; then the other
+    // screens open too. Swiped past the cover, the screen in view just opens.
     const openDuo = (delay = 0) => {
       if (!unfold) return;
       clearTimeout(unfoldTimer);
       showState(true);
+      if (shown > 0) { unfold.classList.add("is-open"); duoStrip.classList.remove("folded"); return; }
       unfoldTimer = setTimeout(() => {
         unfold.classList.add("is-open");
         unfoldTimer = setTimeout(() => duoStrip.classList.remove("folded"), still ? 0 : 1350);
       }, still ? 0 : delay);
     };
-    // Fold: back to the first screen, the other screens fade, the Duo closes.
+    // Fold: every screen turns to the outer screen; the first plays the opening in reverse.
     const foldDuo = () => {
       if (!unfold) return;
       clearTimeout(unfoldTimer);
       showState(false);
-      duoStrip.style.scrollBehavior = "auto"; duoStrip.scrollLeft = 0; duoStrip.style.scrollBehavior = "";
       duoStrip.classList.add("folded");
       unfold.classList.remove("is-open");
     };
