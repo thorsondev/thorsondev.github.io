@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ClaudeAwake · Keep Claude working while you're away</title>
+<meta name="description" content="ClaudeAwake is a Mac menu bar app that keeps your Mac awake while Claude works, even with the lid closed, and tells Claude to continue when a usage limit resets. $2.99, one time.">
+<meta name="theme-color" content="#0d0b12">
+<meta property="og:title" content="ClaudeAwake">
+<meta property="og:description" content="Keep Claude working while you're away. A tiny Mac menu bar app, $2.99 once.">
+<meta property="og:image" content="https://thorsondev.github.io/claudeawake/img/icon-512.png">
+<link rel="icon" href="img/icon-256.png">
+<link rel="apple-touch-icon" href="img/icon-256.png">
+<style>
+:root {
+  --bg: #0d0b12;
+  --ink: #f5f1ec;
+  --muted: #a39cab;
+  --accent: #ff9a47;
+  --accent-2: #ff6f4f;
+  --cool: #4cc4ff;
+  --glass: rgba(255, 255, 255, 0.06);
+  --glass-edge: rgba(255, 255, 255, 0.14);
+  --line: rgba(255, 255, 255, 0.08);
+  --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, "Segoe UI", Roboto, sans-serif;
+  --display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
+  --rounded: ui-rounded, "SF Pro Rounded", -apple-system, system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 10px; }
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 max(20px, env(safe-area-inset-left, 0px)); }
+
+/* Ambient light the glass sits on */
+.ambient { position: fixed; inset: 0; pointer-events: none; z-index: -1; overflow: hidden; }
+.ambient span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .55; animation: drift 14s ease-in-out infinite alternate; }
+.ambient .a { width: 560px; height: 560px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); top: -180px; left: 50%; margin-left: -420px; }
+.ambient .b { width: 460px; height: 460px; background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%); top: 120px; left: 50%; margin-left: 60px; opacity: .35; animation-duration: 18s; }
+.ambient .c { width: 520px; height: 520px; background: radial-gradient(circle, var(--cool) 0%, transparent 70%); top: 900px; left: -160px; opacity: .18; animation-duration: 22s; }
+@keyframes drift { to { transform: translate(60px, 40px) scale(1.08); } }
+
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.03));
+  border: 1px solid var(--glass-edge);
+  border-radius: 26px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 20px 50px rgba(0,0,0,.35);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+}
+
+/* Nav */
+nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+nav .brand { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 600; }
+nav .brand img { width: 30px; height: 30px; }
+nav .links { display: flex; gap: 22px; font-size: 15px; }
+nav .links a { color: var(--muted); text-decoration: none; }
+nav .links a:hover { color: var(--ink); }
+
+/* Hero */
+.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; padding: 56px 0 88px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--accent); padding: 6px 12px; border-radius: 999px; }
+h1 { font: 700 clamp(40px, 6vw, 66px)/1.04 var(--display); letter-spacing: -0.03em; margin: 18px 0 18px; }
+h1 em { font-style: normal; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.lede { font-size: 19px; color: var(--muted); max-width: 30em; margin: 0 0 30px; }
+.buy-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+.buy {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 15px 26px; border-radius: 999px; border: 0; cursor: pointer;
+  font: 600 17px var(--sans); color: #1a0f06; text-decoration: none;
+  background: linear-gradient(180deg, #ffb877, var(--accent) 55%, #f07d36);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 10px 30px rgba(255,140,60,.45);
+  transition: transform .2s, box-shadow .2s;
+}
+.buy:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 14px 38px rgba(255,140,60,.55); }
+.buy .price { padding-left: 12px; border-left: 1px solid rgba(26,15,6,.25); }
+.buy[aria-disabled="true"] { background: rgba(255,255,255,.12); color: var(--muted); box-shadow: none; cursor: default; transform: none; }
+.fine { font-size: 14px; color: var(--muted); }
+
+.shot { position: relative; justify-self: center; }
+.shot::before { content: ""; position: absolute; inset: 10% -10% -5%; background: radial-gradient(circle at 50% 30%, rgba(255,154,71,.45), transparent 65%); filter: blur(30px); z-index: -1; }
+.shot .frame { padding: 10px; border-radius: 34px; }
+.shot img { width: 320px; border-radius: 26px; }
+.menubar { display: flex; justify-content: flex-end; align-items: center; gap: 14px; padding: 0 14px 10px; font-size: 13px; color: var(--muted); }
+.menubar .on { color: var(--ink); display: inline-flex; align-items: center; gap: 5px; }
+
+/* Sections */
+section { padding: 72px 0; }
+h2 { font: 700 clamp(30px, 4vw, 42px)/1.1 var(--display); letter-spacing: -0.02em; margin: 0 0 14px; }
+.section-lede { color: var(--muted); max-width: 36em; margin: 0 0 40px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card { padding: 26px; }
+.card .icon { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 16px; background: linear-gradient(180deg, rgba(255,154,71,.35), rgba(255,154,71,.12)); border: 1px solid rgba(255,190,130,.35); }
+.card .icon svg { width: 22px; height: 22px; stroke: #ffd2a8; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.card h3 { margin: 0 0 6px; font: 600 19px var(--display); }
+.card p { margin: 0; color: var(--muted); font-size: 15.5px; }
+
+.steps { counter-reset: s; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; list-style: none; padding: 0; margin: 0; }
+.steps li { padding: 22px; counter-increment: s; }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font: 700 14px var(--rounded); color: #1a0f06; background: var(--accent); margin-bottom: 14px; }
+.steps strong { display: block; margin-bottom: 4px; }
+.steps span { color: var(--muted); font-size: 15px; }
+
+.faq { display: grid; gap: 12px; max-width: 780px; }
+.faq details { padding: 4px 22px; border-radius: 20px; }
+.faq summary { cursor: pointer; list-style: none; padding: 16px 0; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--accent); font-weight: 400; font-size: 22px; line-height: 1; transition: transform .25s; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { margin: 0 0 18px; color: var(--muted); font-size: 15.5px; }
+
+.cta { text-align: center; padding: 56px 28px; margin: 24px 0 72px; }
+.cta img { width: 88px; margin: 0 auto 18px; }
+.cta .buy-row { justify-content: center; margin-top: 24px; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer a { color: var(--muted); }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 44px; padding-top: 28px; text-align: center; }
+  .lede { margin-left: auto; margin-right: auto; }
+  .buy-row { justify-content: center; }
+  .grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  nav .links { display: none; }
+  .steps { grid-template-columns: 1fr; }
+  .shot img { width: 280px; }
+}
+</style>
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><span class="a"></span><span class="b"></span><span class="c"></span></div>
+
+<div class="wrap">
+  <nav>
+    <a class="brand" href="./"><img src="img/icon-256.png" alt="" width="30" height="30">ClaudeAwake</a>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <span class="eyebrow glass">For Mac · Menu bar app</span>
+      <h1>Keep Claude working <em>while you're away.</em></h1>
+      <p class="lede">ClaudeAwake keeps your Mac awake while Claude works, even with the lid closed. When you hit a usage limit, it waits for the reset and tells Claude to keep going.</p>
+      <div class="buy-row">
+        <a class="buy" data-buy href="#">Buy ClaudeAwake <span class="price">$2.99</span></a>
+        <span class="fine">One-time purchase · No subscription</span>
+      </div>
+    </div>
+    <div class="shot">
+      <div class="menubar" aria-hidden="true">
+        <span>Wi‑Fi</span><span class="on">✦ 1h 42m</span><span>9:41</span>
+      </div>
+      <div class="frame glass">
+        <img src="img/panel.jpg" width="320" height="408" alt="The ClaudeAwake menu: a glowing orange orb showing Awake, Auto / Always / Off buttons, and Auto-continue and Keep awake for options.">
+      </div>
+    </div>
+  </header>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2>Small app. Big difference.</h2>
+    <p class="section-lede">Start a long task, close the lid and walk away. ClaudeAwake takes care of the rest, then gets out of the way.</p>
+    <div class="grid">
+      <div class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2 2.2.8-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg></div>
+        <h3>Awake only when it matters</h3>
+        <p>In Auto, your Mac stays awake only while Claude Desktop or Claude Code is open. Quit Claude and normal sleep comes right back.</p>
+      </div>
+      <div class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg></div>
+        <h3>Close the lid</h3>
+        <p>Toss your MacBook in a bag and Claude keeps working. Allow it once with your password, and you can switch it off any time.</p>
+      </div>
+      <div class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg></div>
+        <h3>Continues after limits</h3>
+        <p>When Claude says your limit resets at 3 PM, ClaudeAwake counts down, then sends “Continue where you left off” for you.</p>
+      </div>
+      <div class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M7 10v4"/></svg></div>
+        <h3>Battery and heat safe</h3>
+        <p>Lets your Mac sleep when the battery runs low or it gets too hot. Nothing stays stuck awake, even if the app quits.</p>
+      </div>
+      <div class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></div>
+        <h3>Phone alerts</h3>
+        <p>Optional notifications through the free ntfy app when Claude finishes or hits a limit, so you know when to come back.</p>
+      </div>
+      <div class="card glass">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div>
+        <h3>Private by design</h3>
+        <p>No accounts, no analytics, no tracking. Everything runs on your Mac. Nothing leaves it unless you turn on phone alerts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>Up and running in a minute</h2>
+    <p class="section-lede">No setup wizards and no account to create.</p>
+    <ol class="steps">
+      <li class="glass"><strong>Buy once</strong><span>$2.99 through Gumroad. Pay with a card, Apple Pay or PayPal.</span></li>
+      <li class="glass"><strong>Check your email</strong><span>Your download link arrives right away and stays in your Gumroad library.</span></li>
+      <li class="glass"><strong>Drag to Applications</strong><span>Open the DMG and drag ClaudeAwake into your Applications folder.</span></li>
+      <li class="glass"><strong>Follow the welcome</strong><span>A short tour helps you allow lid-closed mode and auto-continue.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <div class="faq">
+      <details class="glass"><summary>What do I need?</summary><p>A Mac with macOS 14 Sonoma or later, Apple silicon or Intel. On macOS 26 and later it uses Apple's Liquid Glass design. Works with Claude Desktop and Claude Code.</p></details>
+      <details class="glass"><summary>Why does it ask for my password?</summary><p>macOS always sleeps when you close the lid. To change that, ClaudeAwake adds one rule that lets it run exactly two commands: turn lid sleep off, and turn it back on. It can't do anything else with that permission, and you can remove it from Settings.</p></details>
+      <details class="glass"><summary>Why does auto-continue need Accessibility?</summary><p>To send your continue message, ClaudeAwake pastes it into Claude and presses Return, the same as you would. macOS requires Accessibility permission for that. If you'd rather not allow it, everything else still works and you'll get a notification instead.</p></details>
+      <details class="glass"><summary>Is it safe to keep a closed MacBook awake?</summary><p>ClaudeAwake lets your Mac sleep if it gets too hot or the battery drops below the level you choose (10% by default). Give your Mac some airflow on long runs, and avoid packing it tightly in a bag for hours.</p></details>
+      <details class="glass"><summary>What data does it collect?</summary><p>None. It reads Claude's local log files on your Mac only to spot “limit resets at…” messages. If you turn on phone alerts, short notices like “Claude finished” go to ntfy.sh under a private random topic. There's no analytics and no account.</p></details>
+      <details class="glass"><summary>Can I get a refund?</summary><p>Yes. If ClaudeAwake doesn't work for you, email <a href="mailto:thorson.developer@gmail.com">thorson.developer@gmail.com</a> within 30 days for a full refund.</p></details>
+      <details class="glass"><summary>Is this made by Anthropic?</summary><p>No. ClaudeAwake is an independent app by JustIn Development and isn't affiliated with or endorsed by Anthropic. Claude is a trademark of Anthropic.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="cta glass">
+    <img src="img/icon-256.png" alt="" width="88" height="88">
+    <h2>Let Claude finish the job.</h2>
+    <p class="section-lede" style="margin:0 auto">$2.99 once. Free updates for version 1.</p>
+    <div class="buy-row">
+      <a class="buy" data-buy href="#">Buy ClaudeAwake <span class="price">$2.99</span></a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 JustIn Development · <a href="../">Thorson Apps</a></span>
+    <span>Not affiliated with Anthropic · <a href="mailto:thorson.developer@gmail.com">Support</a></span>
+  </div>
+</footer>
+
+<script>
+// Paste the Gumroad product link here once the product is published.
+const CHECKOUT_URL = "";
+
+document.querySelectorAll("[data-buy]").forEach(a => {
+  if (CHECKOUT_URL) {
+    a.href = CHECKOUT_URL;
+  } else {
+    a.removeAttribute("href");
+    a.setAttribute("aria-disabled", "true");
+    a.innerHTML = 'Coming soon <span class="price">$2.99</span>';
+  }
+});
+</script>
+</body>
+</html>
