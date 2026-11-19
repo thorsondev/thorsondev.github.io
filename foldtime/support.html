@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Support · FoldTime</title>
+<meta name="description" content="Help with FoldTime: setting up background counting, Screen Time, purchases and the Hinge Safe.">
+<meta name="theme-color" content="#050607">
+<link rel="icon" href="img/icon-256.png">
+<link rel="apple-touch-icon" href="img/icon-256.png">
+<link rel="stylesheet" href="ft.css?v=1">
+</head>
+<body>
+<div class="ambient" aria-hidden="true"><div class="hinge"></div></div>
+<header class="wrap narrow">
+  <div class="topbar">
+    <a class="brand" href="./"><img src="img/icon-256.png" alt=""><span>FoldTime</span></a>
+    <nav class="nav" aria-label="FoldTime">
+      <a href="./">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html" aria-current="page">Support</a>
+    </nav>
+  </div>
+  <div class="page-hero">
+    <p class="eyebrow">FoldTime</p>
+    <h1>Support</h1>
+    <p>Email <a href="mailto:thorson.developer@gmail.com">thorson.developer@gmail.com</a>. One person reads every message.</p>
+  </div>
+</header>
+
+<main class="wrap narrow">
+  <article class="doc glass">
+    <section id="setup">
+      <h2>Count folds when FoldTime is closed</h2>
+      <p>iOS only lets apps read the hinge while they're on screen, so FoldTime uses one Shortcuts automation to count the rest. It takes about a minute, and FoldTime walks you through it and checks that it works.</p>
+      <p><strong>The quick way:</strong> during setup, FoldTime offers a ready-made shortcut. Tap <strong>Add Shortcut</strong>, open the <strong>FoldTime</strong> shortcut, tap the <strong>›</strong> arrow after <strong>Opened or Closed</strong>, and turn <strong>Automation</strong> on and <strong>Notify</strong> off.</p>
+      <p><strong>By hand:</strong></p>
+      <ol>
+        <li>In <strong>Shortcuts</strong>, tap <strong>+</strong> to make a new shortcut.</li>
+        <li>Tap <strong>Edit</strong>, then the <strong>Search</strong> bar, then <strong>Automation</strong>.</li>
+        <li>Pick <strong>When iPhone is…</strong> and set it to <strong>Opened or Closed</strong>.</li>
+        <li>Search <strong>FoldTime</strong> and add <strong>Log Fold Change</strong>.</li>
+        <li>Leave <strong>Automation</strong> on, turn <strong>Notify</strong> off, then tap back to save.</li>
+        <li>Back in FoldTime, open and close your Duo once. The check turns green when the automation reports in.</li>
+      </ol>
+      <p>Requires iOS 27.2 or later. You can re-run the check any time in Settings › Background counting.</p>
+    </section>
+    <section>
+      <h2>Questions</h2>
+      <details>
+        <summary>My count looks off.</summary>
+        <p>Open the FoldTime shortcut and check that <strong>Automation</strong> is on. FoldTime ignores the same motion reported twice, and when it notices a fold was missed it fills it in and says so on the Today screen. Opening FoldTime also checks the log against the real hinge position.</p>
+      </details>
+      <details>
+        <summary>Why are per-app numbers "estimated"?</summary>
+        <p>Screen Time reports app use by the hour. FoldTime splits each hour by how long your Duo was folded or open in it. It's a good guide, not an exact timer. That data never leaves your iPhone.</p>
+      </details>
+      <details>
+        <summary>Is the hinge log a diagnosis?</summary>
+        <p>No. Hinge Health is a personal usage log from your hinge sensor, so you can see your own trend over time. It isn't a diagnosis or an Apple assessment.</p>
+      </details>
+      <details>
+        <summary>How does the Hinge Safe work?</summary>
+        <p>Your hinge turns the dial. Open your Duo to the lit mark and hold it there until the pin clicks. The Daily Safe is the same for everyone each day, so you can compare times with friends. Practice and five-pin Safecracker mode come with Pro.</p>
+      </details>
+      <details>
+        <summary>How do the 3-day Trial and Pro work?</summary>
+        <p>The 3-day Trial is free and unlocks every Pro feature for 3 days. It doesn't renew or charge you. FoldTime Pro is a one-time purchase with no subscription, and it works for your Family Sharing group.</p>
+      </details>
+      <details>
+        <summary>I bought Pro but it isn't unlocked.</summary>
+        <p>Go to Settings › FoldTime Pro › <strong>Restore Purchases</strong>, signed in with the Apple Account you bought it with.</p>
+      </details>
+      <details>
+        <summary>Does FoldTime work on other iPhones?</summary>
+        <p>FoldTime is made for iPhone Duo. On other iPhones you can look around, but there's no hinge to count.</p>
+      </details>
+    </section>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap narrow">
+    <span>© 2026 Thorson Dev</span>
+    <span><a href="../">Thorson Apps</a> · <a href="privacy.html">Privacy</a></span>
+  </div>
+</footer>
+<script src="ft.js?v=1"></script>
+</body>
+</html>
