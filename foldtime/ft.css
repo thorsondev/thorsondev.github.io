@@ -69,7 +69,10 @@ h1 .lit { color: var(--light); text-shadow: 0 0 28px rgba(215, 255, 90, 0.5); }
 .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .note { font: 13px var(--mono); color: var(--dim); margin-top: 14px; }
 
-.device { margin: 40px auto 0; max-width: 980px; filter: drop-shadow(0 30px 60px rgba(0,0,0,.6)); }
+/* Never wider than the page: a fixed max-width here used to override img's max-width: 100%, so on
+   narrow screens (like the Duo's outer screen) the picture overflowed and Safari laid the page out too wide. */
+.device { margin: 40px auto 0; width: 100%; max-width: min(100%, 980px); filter: drop-shadow(0 30px 60px rgba(0,0,0,.6)); }
+.stats > *, .feature-row > *, .grid > *, .pricing > * { min-width: 0; }
 
 /* Counter strip */
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 56px 0 0; }

@@ -2,12 +2,21 @@
 (function () {
   var root = document.documentElement;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function onScroll() {
-    var max = Math.max(1, document.body.scrollHeight - window.innerHeight);
+  // Measure the page only on load/resize (reading scrollHeight on every scroll forces layout), and
+  // update at most once per frame.
+  var max = 1, queued = false;
+  function measure() { max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight); update(); }
+  function update() {
+    queued = false;
     var t = Math.min(1, window.scrollY / Math.min(max, 900));
     root.style.setProperty('--open', (0.2 + 0.8 * t).toFixed(3));
   }
-  if (!reduce) { window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
+  if (!reduce) {
+    window.addEventListener('scroll', function () { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', measure);
+    measure();
+  }
 
   var items = document.querySelectorAll('.reveal');
   if (reduce || !('IntersectionObserver' in window)) {
