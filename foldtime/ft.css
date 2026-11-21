@@ -73,6 +73,11 @@ h1 .lit { color: var(--light); text-shadow: 0 0 28px rgba(215, 255, 90, 0.5); }
    narrow screens (like the Duo's outer screen) the picture overflowed and Safari laid the page out too wide. */
 .device { margin: 40px auto 0; width: 100%; max-width: min(100%, 980px); filter: drop-shadow(0 30px 60px rgba(0,0,0,.6)); }
 .stats > *, .feature-row > *, .grid > *, .pricing > * { min-width: 0; }
+/* The Duo pictures are cut out along the phone, so the shadow follows its outline. */
+.feature-row > img { width: 100%; margin: 0 auto; filter: drop-shadow(0 24px 40px rgba(0,0,0,.55)); }
+/* Even line lengths, no one-word last lines. */
+h1, h2, h3, .lede, .note, .feature-row p { text-wrap: balance; }
+.feature-row p { text-wrap: pretty; }
 
 /* Counter strip */
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 56px 0 0; }
