@@ -28,7 +28,7 @@
     <div class="page-hero">
       <p class="eyebrow">Be Still</p>
       <h1>Privacy Policy</h1>
-      <p>Effective November 13, 2026</p>
+      <p>Effective November 20, 2026</p>
     </div>
   </div>
   <svg class="dunes" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
@@ -49,7 +49,7 @@
       <li><strong>Your notes, highlights, bookmarks, prayers, journal entries, reading plans and memory verses</strong> are stored on your device. If iCloud is turned on for Be Still, Apple syncs them between your own devices through your private iCloud account. We have no access to it.</li>
       <li><strong>Bible Chat</strong> answers your questions with a language model that runs on your iPhone: Apple Intelligence, or an optional model you download once. Your questions and its answers are never sent to us or to anyone else. Saved conversations are encrypted on your device.</li>
       <li><strong>Speaking a question</strong> to Bible Chat uses Apple's speech recognition on your device. The microphone listens only after you tap it, while you speak.</li>
-      <li><strong>Today's Reflection</strong> is written on your iPhone by Apple Intelligence. Nothing about it leaves your device.</li>
+      <li><strong>Today's Devotional</strong> is written on your iPhone by Apple Intelligence, or, on iPhones without it, is a hand-written devotional included in the app. Nothing about it leaves your device.</li>
       <li><strong>Your reading streak and the days you open the app</strong> are counted on your device only.</li>
       <li><strong>Reminders</strong> (verse of the day, streak and reading plans) are scheduled on your device. Be Still doesn't use a push notification server.</li>
     </ul>
@@ -59,6 +59,7 @@
     <p>To show you the Bible and its tools, the app requests content from these services. Each request says only what to fetch, such as a chapter, a translation or a voice. Like any website, these services can see your device's IP address when it connects. Be Still sends them nothing about you.</p>
     <ul>
       <li><a href="https://bible.helloao.org">Free Use Bible API</a> (bible.helloao.org): Bible text, such as the Berean Standard Bible, plus study notes and cross-references.</li>
+      <li>Be Still's relay (bestill-relay.thorsondev.workers.dev, run on Cloudflare): the New International Version, if you choose it. The relay adds the app's license key, asks the <a href="https://developers.youversion.com">YouVersion Platform</a> for only the chapter or verse requested, and keeps no record of who asked.</li>
       <li><a href="https://api.esv.org">ESV API</a> by Crossway: the English Standard Version, if you choose it.</li>
       <li><a href="https://api.bible">API.Bible</a>: other translations, if you choose them.</li>
       <li><a href="https://huggingface.co">Hugging Face</a>: the optional natural voices and the optional Bible Chat model, downloaded once if you ask for them.</li>
@@ -74,6 +75,20 @@
     <section>
       <h2>Tips</h2>
     <p>Be Still is free. Optional tips are handled by Apple through the App Store. We never see your name, payment details or Apple Account.</p>
+    </section>
+    <section>
+      <h2>On Android</h2>
+    <p>Be Still for Android follows the same rules: no accounts, ads, analytics or tracking. Where it differs from the iPhone app:</p>
+    <ul>
+      <li><strong>Backup.</strong> Your notes, highlights, prayers, journal, plans and Bible Chat conversations are kept in the app's private storage. Android's own backup can copy them to your Google account so they come back on a new phone; you control this in your phone's settings. We can't see it.</li>
+      <li><strong>Bible Chat</strong> uses Gemini Nano, the model built into some Android phones, through Android's on-device AI service, and so does <strong>Today's Devotional</strong> where Gemini Nano is available; elsewhere it's a hand-written devotional included in the app. Questions, answers and devotionals stay on your phone.</li>
+      <li><strong>Natural voices</strong> are downloaded once, if you ask for them, from the open-source sherpa-onnx project on GitHub (github.com).</li>
+      <li><strong>Health Connect.</strong> If you allow it, Be Still saves your quiet times to Health Connect as mindfulness sessions. It never reads any of your health data.</li>
+      <li><strong>Journal lock</strong> uses your phone's fingerprint, face or screen lock, handled entirely by Android.</li>
+      <li><strong>Tips</strong> are handled by Google Play. We never see your name, payment details or Google account.</li>
+      <li>The ESV and API.Bible translations aren't offered on Android.</li>
+    </ul>
+    <p>To remove everything on Android, uninstall the app or clear its storage in Settings › Apps › Be Still.</p>
     </section>
     <section>
       <h2>Children</h2>
