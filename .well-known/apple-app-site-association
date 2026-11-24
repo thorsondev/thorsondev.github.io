@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["ZZJV7QQ2D9.com.thorsondev.bestill"],
+        "components": [
+          { "/": "/bestill/join/*", "comment": "Be Still group invites" }
+        ]
+      }
+    ]
+  }
+}
