@@ -20,10 +20,14 @@
     headers: { apikey: cfg.anonKey, Authorization: `Bearer ${cfg.anonKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({ p_code: code }),
   })
-    .then((r) => (r.ok ? r.json() : []))
+    // A server that's down or paused says nothing about the code: keep the
+    // page as it is, with the code and the Open button.
+    .then((r) => (r.ok ? r.json() : null))
     .then((rows) => {
-      const g = Array.isArray(rows) ? rows[0] : null;
-      if (!g) { show("bad"); return; }
+      if (!Array.isArray(rows)) return;
+      // A well-formed code the server doesn't know was cleaned up after it ended.
+      const g = rows[0];
+      if (!g) { show("expired"); return; }
       if (!g.valid) { show("expired"); return; }
       const from = String(g.owner_first_name || "").slice(0, 40);
       const name = String(g.group_name || "").slice(0, 80);
