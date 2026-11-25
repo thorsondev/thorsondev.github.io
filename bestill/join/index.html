@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Join a group · Be Still</title>
+<meta name="description" content="You're invited to read the Bible together in Be Still.">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0c0f26">
+<meta name="apple-itunes-app" content="app-id=6834930744">
+<meta property="og:title" content="Join my group in Be Still">
+<meta property="og:description" content="Read the Bible together: shared notes, highlights and prayer requests, private to your group.">
+<meta property="og:image" content="https://thorsondev.github.io/bestill/img/duo-reflection.jpg">
+<link rel="icon" href="../img/icon-256.png">
+<link rel="apple-touch-icon" href="../img/icon-256.png">
+<link rel="stylesheet" href="../../style.css?v=32">
+<style>
+  .join { margin-top: -70px; position: relative; padding: 34px clamp(22px, 5vw, 48px); display: grid; gap: 26px; }
+  .join h2 { font-family: var(--display); font-weight: 700; letter-spacing: -0.02em; font-size: 1.3rem; margin: 0 0 6px; }
+  .join p { margin: 0; }
+  .open-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px;
+              font: 600 1.05rem/1 var(--sans); color: #1b1918; background: var(--gold-soft); text-decoration: none;
+              box-shadow: 0 8px 24px rgba(185, 119, 58, 0.30); }
+  .open-btn:hover { filter: brightness(1.04); }
+  .stores { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+  .store-badge { display: inline-block; line-height: 0; border-radius: 9px; }
+  .store-badge img { display: block; height: 48px; width: auto; }
+  .store-badge:focus-visible { outline: 2px solid var(--gold-soft); outline-offset: 3px; }
+  .play { font-weight: 600; }
+  .code-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 16px 20px; border-radius: 20px;
+              background: rgba(185, 119, 58, 0.10); border: 1px solid rgba(185, 119, 58, 0.25); }
+  .code { font: 600 1.25rem/1.2 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: 0.08em; user-select: all; }
+  .count { color: rgba(244, 239, 230, 0.78); margin-top: 10px; font-size: 1rem; }
+  .fine { color: var(--muted); font-size: 0.95rem; }
+  [data-state="bad"] .when-ready, [data-state="expired"] .when-ready, [data-state="ready"] .when-bad,
+  [data-state="ready"] .when-expired, [data-state="bad"] .when-expired, [data-state="expired"] .when-bad,
+  :not([data-state]) .when-bad, :not([data-state]) .when-expired { display: none; }
+</style>
+</head>
+<body>
+
+<header class="sky">
+  <canvas class="stars" aria-hidden="true"></canvas>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="wrap narrow">
+    <div class="topbar">
+      <a class="brand" href="../"><span>Be Still</span></a>
+      <nav class="nav" aria-label="Be Still">
+        <a href="../">Home</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../support.html">Support</a>
+      </nav>
+    </div>
+    <div class="page-hero">
+      <p class="eyebrow">Group invite</p>
+      <h1 id="title">You're invited</h1>
+      <p id="lede" class="when-ready">You're invited to read the Bible together in Be Still.</p>
+      <p class="when-bad">This invite link isn't complete. Ask for a new one, or type the code in the app.</p>
+      <p class="when-expired">This invite has expired or was turned off. Ask the person who sent it for a new one.</p>
+      <p id="count" class="count when-ready" hidden></p>
+    </div>
+  </div>
+  <svg class="dunes" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="far" d="M0 96 C 180 60 340 70 520 92 S 900 128 1100 96 S 1340 66 1440 82 V160 H0 Z"/>
+    <path class="near" d="M0 128 C 220 104 420 112 640 126 S 1040 150 1240 128 S 1400 112 1440 118 V160 H0 Z"/>
+  </svg>
+</header>
+
+<main class="wrap narrow">
+  <article class="join glass">
+    <section class="when-ready">
+      <h2>Have Be Still?</h2>
+      <p style="margin-bottom:16px">Open the invite in the app to see the group and join.</p>
+      <a id="open" class="open-btn" href="bestill://join">Open in Be Still</a>
+    </section>
+    <section>
+      <h2>Need the app?</h2>
+      <p style="margin-bottom:16px">It's free, with no ads. Reading never needs an account; joining a group does.</p>
+      <div class="stores">
+        <a class="store-badge" href="https://apps.apple.com/app/be-still-bible-devotional/id6834930744"><img src="../img/app-store-badge.svg" alt="Download on the App Store" width="144" height="48"></a>
+        <a class="play" href="https://play.google.com/store/apps/details?id=com.thorsondev.bestill">Get it on Google Play</a>
+      </div>
+    </section>
+    <section class="when-ready">
+      <h2>Then enter this code</h2>
+      <p style="margin-bottom:14px">In the app, open Groups, tap Join, and type:</p>
+      <div class="code-row"><span class="code" id="code" aria-label="Invite code"></span><button class="copy" type="button" id="copy-code" data-copy="" data-select="#code">Copy</button></div>
+    </section>
+    <p class="fine">Groups are private. Only people with an invite can join, and Bible text stays on your phone.</p>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap narrow">
+    <span>Be Still · Free, with no ads, made by one person.</span>
+    <span><a href="../">Home</a><a href="../privacy.html">Privacy</a><a href="../support.html">Support</a></span>
+  </div>
+</footer>
+<script src="config.js"></script>
+<script src="join.js"></script>
+<script src="../../site.js?v=29"></script>
+</body>
+</html>

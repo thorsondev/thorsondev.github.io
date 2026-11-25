@@ -71,6 +71,10 @@
         <summary>I forgot my Journal lock. How do I get in?</summary>
         <p>The lock uses Face ID or your device passcode, so anyone who can unlock your iPhone can unlock the Journal. Nothing is stored with Be Still that could be reset.</p>
       </details>
+        <details id="delete-account">
+        <summary>How do I delete my account?</summary>
+        <p>You only have an account if you joined or made a group. To delete it, open Be Still and go to Settings › Account › Delete account. Your profile, photo, backup, and everything you shared in groups (notes, highlights, replies, reactions, prayer requests and answers) are removed from the server within seconds, and you leave every group. What's on your own phone stays unless you remove the app. If you can't open the app, write to the address above from the email you signed in with, and the account will be deleted for you.</p>
+      </details>
         <details>
         <summary>Does Be Still cost anything?</summary>
         <p>No. Everything is free, with no ads and nothing locked. Tips are optional and unlock nothing.</p>
@@ -87,5 +91,9 @@
   </div>
 </footer>
 <script src="../site.js?v=29"></script>
+<script>
+  // A link to one answer (support.html#delete-account) opens it.
+  (() => { const d = location.hash && document.getElementById(location.hash.slice(1)); if (d && d.tagName === "DETAILS") d.open = true; })();
+</script>
 </body>
 </html>
