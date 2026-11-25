@@ -28,7 +28,8 @@
       const from = String(g.owner_first_name || "").slice(0, 40);
       const name = String(g.group_name || "").slice(0, 80);
       $("title").textContent = name || "You're invited";
-      $("lede").textContent = from ? `${from} invited you to read the Bible together in Be Still.` : "You're invited to read the Bible together in Be Still.";
+      // The preview names the group's owner, who isn't always the one who sent the link.
+      $("lede").textContent = from ? `You're invited to ${from}'s group, to read the Bible together in Be Still.` : "You're invited to read the Bible together in Be Still.";
       const n = Number(g.member_count) || 0;
       $("count").textContent = n === 1 ? "1 person so far" : `${n} people so far`;
       $("count").hidden = n < 1;
