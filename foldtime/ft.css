@@ -144,3 +144,12 @@ footer.site a { color: var(--dim); }
   .doc { padding: 22px; }
   .hinge { display: none; }
 }
+
+/* Apple's official "Download on the App Store" badge, kept at its own proportions (as on Be Still). */
+.ctas { align-items: center; }
+.store-badge { display: inline-block; line-height: 0; border-radius: 9px; transition: transform .15s ease, box-shadow .15s ease; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
+.store-badge img { display: block; height: 54px; width: auto; }
+.store-badge:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38); }
+.store-badge:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (max-width: 520px) { .store-badge img { height: 48px; } }
+@media (prefers-reduced-motion: reduce) { .store-badge, .store-badge:hover { transition: none; transform: none; } }
